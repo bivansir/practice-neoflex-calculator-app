@@ -1,6 +1,7 @@
 package ru.neoflex.calcservice.dto.request;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 public class ScoringDataDto {
     @NotNull(message = "Размер кредита требуется")
     @DecimalMin(value = "10000.0", message = "Размер кредита должен быть не менее 10.000")
