@@ -33,11 +33,11 @@ public class CalcService {
 
     private void validateAge(LocalDate birthdate, Integer term) {
         if (calculateAge(birthdate) < 18) {
-            throw new BusinessValidationException("Клиент должен быть старше 18 лет");
+            throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
         }
         int ageAtCreditEnd = calculateAge(birthdate) + term / 12;
         if (ageAtCreditEnd > 65) {
-            throw new BusinessValidationException("Возраст клиента на момент окончания кредита не может быть больше 65 лет");
+            throw new BusinessValidationException("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет");
         }
     }
 
