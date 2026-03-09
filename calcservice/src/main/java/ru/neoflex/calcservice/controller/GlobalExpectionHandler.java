@@ -2,6 +2,7 @@ package ru.neoflex.calcservice.controller;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExpectionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -23,6 +25,7 @@ public class GlobalExpectionHandler {
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage()));
 
+        log.error("VALIDATION_ERROR: {}", errors);
         return ResponseEntity.badRequest().body(
                 ErrorResponse.builder()
                         .code("VALIDATION_ERROR")
@@ -36,6 +39,8 @@ public class GlobalExpectionHandler {
     @ExceptionHandler(BusinessValidationException.class)
     public ResponseEntity<ErrorResponse> handleBusinessValidation(
             BusinessValidationException ex) {
+
+        log.error("VALIDATION_ERROR: {}", ex.getMessage());
         return ResponseEntity.badRequest().body(
                 ErrorResponse.builder()
                         .code("VALIDATION_ERROR")
@@ -47,13 +52,16 @@ public class GlobalExpectionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable() {
-        String details = "Ошибка в формате данных";
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex) {
+        String springMessage = ex.getMostSpecificCause().getMessage();
+
+        log.error("BAD_REQUEST {}", springMessage);
         return ResponseEntity.badRequest().body(
                 ErrorResponse.builder()
                         .code("BAD_REQUEST")
                         .message("Ошибка чтения запроса")
-                        .details(details)
+                        .details(springMessage)
                         .timestamp(LocalDateTime.now())
                         .build()
         );
@@ -61,6 +69,8 @@ public class GlobalExpectionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
+
+        log.error("INTERNAL_ERROR: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 ErrorResponse.builder()
                         .code("INTERNAL_ERROR")

@@ -1,5 +1,6 @@
 package ru.neoflex.calcservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.calcservice.dto.request.LoanStatementRequestDto;
 import ru.neoflex.calcservice.dto.request.ScoringDataDto;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+@Slf4j
 @Service
 public class CalcService {
 
@@ -31,11 +33,11 @@ public class CalcService {
 
     private void validateAge(LocalDate birthdate, Integer term) {
         if (calculateAge(birthdate) < 18) {
-            throw new BusinessValidationException("Клиент должен быть старше 18 лет");
+            throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
         }
         int ageAtCreditEnd = calculateAge(birthdate) + term / 12;
         if (ageAtCreditEnd > 65) {
-            throw new BusinessValidationException("Возраст клиента на момент окончания кредита не может быть больше 65 лет");
+            throw new BusinessValidationException("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет");
         }
     }
 
@@ -107,13 +109,19 @@ public class CalcService {
     private LoanOfferDto createOffer(LoanStatementRequestDto request, Boolean isInsuranceEnabled, Boolean isSalaryClient) {
         BigDecimal requestAmount = request.getAmount();
         Integer term = request.getTerm();
-
+        UUID statementId = UUID.randomUUID();
         BigDecimal totalAmount = calculateAmount(isInsuranceEnabled, requestAmount, term);
+        log.debug("loanOffer {} totalAmount: {}, isInsuranceEnabled: {}, isSalaryClient: {}",
+                statementId, totalAmount, isInsuranceEnabled, isSalaryClient);
         BigDecimal rate = calculateRate(isInsuranceEnabled, isSalaryClient, requestAmount, term);
+        log.debug("loanOffer {} rate: {}, isInsuranceEnabled: {}, isSalaryClient: {}",
+                statementId, rate, isInsuranceEnabled, isSalaryClient);
         BigDecimal monthlyPayment = calculateMonthlyPayment(rate, term, totalAmount);
+        log.debug("loanOffer {} monthlyPayment: {}, isInsuranceEnabled: {}, isSalaryClient: {}",
+                statementId, monthlyPayment, isInsuranceEnabled, isSalaryClient);
 
         return LoanOfferDto.builder()
-                .statementId(UUID.randomUUID())
+                .statementId(statementId)
                 .requestedAmount(requestAmount.setScale(0, RoundingMode.HALF_UP))
                 .totalAmount(totalAmount.setScale(0, RoundingMode.HALF_UP))
                 .term(term)
@@ -131,6 +139,8 @@ public class CalcService {
         BigDecimal remainingDebt = amount;
         for (int month = 1; month <= term; month++) {
             BigDecimal interestPayment = remainingDebt.multiply(monthlyRate);
+            log.debug("PaymentScheduleElement {} interestPayment: {}",
+                    month, interestPayment);
             BigDecimal debtPayment;
             BigDecimal totalPayment;
 
@@ -145,10 +155,16 @@ public class CalcService {
                 debtPayment = BigDecimal.ZERO;
                 totalPayment = interestPayment;
             }
+            log.debug("PaymentScheduleElement {} debtPayment: {}",
+                    month, debtPayment);
+            log.debug("PaymentScheduleElement {} totalPayment: {}",
+                    month, totalPayment);
             remainingDebt = remainingDebt.subtract(debtPayment);
             if (remainingDebt.compareTo(BigDecimal.ZERO) < 0) {
                 remainingDebt = BigDecimal.ZERO;
             }
+            log.debug("PaymentScheduleElement {} remainingDebt: {}",
+                    month, remainingDebt);
 
             PaymentScheduleElementDto element = PaymentScheduleElementDto.builder()
                     .number(month)
@@ -195,10 +211,15 @@ public class CalcService {
         BigDecimal amount = request.getAmount();
         Boolean isInsuranceEnabled = request.getIsInsuranceEnabled();
         Boolean isSalaryClient = request.getIsSalaryClient();
-
         BigDecimal psk = calculateAmount(isInsuranceEnabled, amount, term);
+        log.debug("Credit psk: {}",
+                psk);
         BigDecimal rate = calculateRate(isInsuranceEnabled, isSalaryClient, amount, term);
+        log.debug("Credit rate: {}",
+                rate);
         BigDecimal monthlyPayment = calculateMonthlyPayment(rate, term, psk);
+        log.debug("Credit monthlyPayment: {}",
+                monthlyPayment);
         List<PaymentScheduleElementDto> paymentSchedule = calculatePaymentSchedule(monthlyPayment, term, psk, rate);
 
         return CreditDto.builder()
