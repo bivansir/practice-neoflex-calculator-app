@@ -96,7 +96,7 @@ public class CalcService {
         if (isInsuranceEnabled) {
             BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
             BigDecimal insuranceCost;
-            if (requestedAmount.compareTo(new BigDecimal(500000)) < 0) {
+            if (requestedAmount.compareTo(properties.getSmallCreditLimit()) < 0) {
                 insuranceCost = requestedAmount.multiply(properties.getInsuranceCostMultiplier()).multiply(termInYears);
             } else {
                 insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
