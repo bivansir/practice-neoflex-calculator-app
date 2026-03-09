@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import ru.neoflex.calcservice.service.CalcService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/calculator")
 @RequiredArgsConstructor
@@ -79,7 +81,9 @@ public class CalcController {
             )
             @RequestBody @Valid LoanStatementRequestDto loanStatementRequest
     ) {
+        log.info("Входные данные приняты {}", loanStatementRequest.toString());
         List<LoanOfferDto> offers = calcService.prescore(loanStatementRequest);
+        log.info("Выходные данные получены {}", offers.toString());
         return ResponseEntity.ok(offers);
     }
 
@@ -130,7 +134,9 @@ public class CalcController {
             )
             @RequestBody @Valid ScoringDataDto scoringData
     ) {
+        log.info("Входные данные приняты {}", scoringData.toString());
         CreditDto credit = calcService.calc(scoringData);
+        log.info("Выходные данные получены {}", credit.toString());
         return ResponseEntity.ok(credit);
     }
 }
