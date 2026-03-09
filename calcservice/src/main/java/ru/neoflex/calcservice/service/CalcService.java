@@ -31,6 +31,7 @@ public class CalcService {
 
     }
 
+    // Бизнес-валидация (прескоринг)
     private void validateAge(LocalDate birthdate, Integer term) {
         if (calculateAge(birthdate) < 18) {
             throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
@@ -55,6 +56,7 @@ public class CalcService {
         return amount.multiply(paymentCoeff).setScale(0, RoundingMode.HALF_UP);
     }
 
+    // Расчет скидки при пакетной страховки
     private BigDecimal calculateInsuranceDiscount(Integer term, BigDecimal amount) {
         BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
         BigDecimal insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
@@ -91,6 +93,7 @@ public class CalcService {
         return rate;
     }
 
+    // Расчет полной цены кредита
     private BigDecimal calculateAmount(Boolean isInsuranceEnabled, BigDecimal requestedAmount, Integer term) {
         BigDecimal totalAmount = requestedAmount;
         if (isInsuranceEnabled) {
