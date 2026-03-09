@@ -18,7 +18,6 @@ import jakarta.servlet.Filter;
 @Slf4j
 @Component
 public class RequestIdFilter implements Filter {
-    //private static final String REQUEST_ID_HEADER = "X-Request-ID";
     private static final String REQUEST_ID_MDC_KEY = "requestId";
 
     private static final List<String> IGNORED_PATHS = List.of(
@@ -46,7 +45,6 @@ public class RequestIdFilter implements Filter {
         }
         String requestId = UUID.randomUUID().toString();
         MDC.put(REQUEST_ID_MDC_KEY, requestId);
-        //httpResponse.setHeader(REQUEST_ID_HEADER, requestId);
         try {
             chain.doFilter(request, response);
         } finally {

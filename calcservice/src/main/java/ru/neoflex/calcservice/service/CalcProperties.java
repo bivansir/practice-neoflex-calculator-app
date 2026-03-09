@@ -17,4 +17,5 @@ public class CalcProperties {
     private BigDecimal salaryClientDiscount;
     private BigDecimal insurancePercentDiscount;
     private BigDecimal insurancePacketCost;
+    private BigDecimal smallCreditLimit;
 }
