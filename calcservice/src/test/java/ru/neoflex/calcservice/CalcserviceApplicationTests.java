@@ -55,14 +55,14 @@ class CalcServiceTest extends BaseTest {
                 BusinessValidationException.class,
                 () -> calcService.prescore(request)
         );
-        assertEquals("Клиент должен быть старше 18 лет", underAgeException.getMessage());
+        assertEquals("birthdate: Клиент должен быть старше 18 лет", underAgeException.getMessage());
 
         request.setBirthdate(LocalDate.parse("25-08-1962", formatter));
         BusinessValidationException overAgeException = assertThrows(
                 BusinessValidationException.class,
                 () -> calcService.prescore(request)
         );
-        assertEquals("Возраст клиента на момент окончания кредита не может быть больше 65 лет", overAgeException.getMessage());
+        assertEquals("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет", overAgeException.getMessage());
     }
 
     @Test
