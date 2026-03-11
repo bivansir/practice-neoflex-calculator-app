@@ -54,7 +54,7 @@ public abstract class BaseTest {
                 .monthlyPayment(BigDecimal.valueOf(12000))
                 .rate(BigDecimal.valueOf(0.25))
                 .isInsuranceEnabled(false)
-                .isInsuranceEnabled(false)
+                .isSalaryClient(false)
                 .build();
     }
 
@@ -77,7 +77,7 @@ public abstract class BaseTest {
                 .rate(BigDecimal.valueOf(0.25))
                 .psk(BigDecimal.valueOf(120000))
                 .isInsuranceEnabled(false)
-                .isInsuranceEnabled(false)
+                .isSalaryClient(false)
                 .paymentSchedule(paymentSchedule)
                 .build();
     }
