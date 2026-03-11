@@ -1,4 +1,4 @@
-package ru.neoflex.calcservice;
+package ru.neoflex.calcservice.util;
 
 import ru.neoflex.calcservice.dto.request.LoanStatementRequestDto;
 import ru.neoflex.calcservice.dto.request.ScoringDataDto;
@@ -33,7 +33,7 @@ public abstract class BaseTest {
     protected static ScoringDataDto createScoringDataDto() {
         return ScoringDataDto.builder()
                 .amount(BigDecimal.valueOf(1000000))
-                .term(36)
+                .term(6)
                 .firstName("Илья")
                 .lastName("Семенов")
                 .middleName("Игоревич")
@@ -54,7 +54,7 @@ public abstract class BaseTest {
                 .monthlyPayment(BigDecimal.valueOf(12000))
                 .rate(BigDecimal.valueOf(0.25))
                 .isInsuranceEnabled(false)
-                .isInsuranceEnabled(false)
+                .isSalaryClient(false)
                 .build();
     }
 
@@ -77,7 +77,7 @@ public abstract class BaseTest {
                 .rate(BigDecimal.valueOf(0.25))
                 .psk(BigDecimal.valueOf(120000))
                 .isInsuranceEnabled(false)
-                .isInsuranceEnabled(false)
+                .isSalaryClient(false)
                 .paymentSchedule(paymentSchedule)
                 .build();
     }

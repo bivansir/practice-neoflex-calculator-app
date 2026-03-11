@@ -1,4 +1,4 @@
-package ru.neoflex.calcservice.service;
+package ru.neoflex.calcservice.properties;
 
 
 import lombok.Data;
