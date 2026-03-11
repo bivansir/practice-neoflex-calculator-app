@@ -7,14 +7,13 @@ import ru.neoflex.calcservice.dto.request.ScoringDataDto;
 import ru.neoflex.calcservice.dto.response.CreditDto;
 import ru.neoflex.calcservice.dto.response.LoanOfferDto;
 import ru.neoflex.calcservice.dto.response.PaymentScheduleElementDto;
-import ru.neoflex.calcservice.exception.BusinessValidationException;
 import ru.neoflex.calcservice.properties.CalcProperties;
+import ru.neoflex.calcservice.util.ValidationHelper;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.*;
 
 @Slf4j
@@ -29,7 +28,7 @@ public class CalcService {
     }
 
     public List<LoanOfferDto> prescore(LoanStatementRequestDto request) {
-        validateAge(request.getBirthdate(), request.getTerm());
+        ValidationHelper.validateAge(request.getBirthdate(), request.getTerm());
         List<LoanOfferDto> offers = new ArrayList<>();
 
         for (boolean isInsuranceEnabled : Arrays.asList(false, true)) {
@@ -53,7 +52,7 @@ public class CalcService {
     public CreditDto calc(ScoringDataDto request) {
         Integer term = request.getTerm();
 
-        validateAge(request.getBirthdate(), term);
+        ValidationHelper.validateAge(request.getBirthdate(), term);
 
         BigDecimal amount = request.getAmount();
         Boolean isInsuranceEnabled = request.getIsInsuranceEnabled();
@@ -221,20 +220,5 @@ public class CalcService {
 
     private BigDecimal calculateMonthlyRate(BigDecimal rate) {
         return rate.divide(new BigDecimal(12), mc);
-    }
-
-    private int calculateAge(LocalDate birthdate) {
-        return Period.between(birthdate, LocalDate.now()).getYears();
-
-    }
-    // Бизнес-валидация (прескоринг)
-    private void validateAge(LocalDate birthdate, Integer term) {
-        if (calculateAge(birthdate) < 18) {
-            throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
-        }
-        int ageAtCreditEnd = calculateAge(birthdate) + term / 12;
-        if (ageAtCreditEnd > 65) {
-            throw new BusinessValidationException("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет");
-        }
     }
 }
