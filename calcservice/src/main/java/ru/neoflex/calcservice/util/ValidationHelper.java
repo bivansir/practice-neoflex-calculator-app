@@ -9,7 +9,7 @@ import java.time.Period;
 @UtilityClass
 public class ValidationHelper {
     // Бизнес-валидация (прескоринг)
-    public void validateAge(LocalDate birthdate, Integer term) {
+    public static void validateAge(LocalDate birthdate, Integer term) {
         if (calculateAge(birthdate) < 18) {
             throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
         }
@@ -19,7 +19,7 @@ public class ValidationHelper {
         }
     }
 
-    private int calculateAge(LocalDate birthdate) {
+    private static int calculateAge(LocalDate birthdate) {
         return Period.between(birthdate, LocalDate.now()).getYears();
     }
 }
