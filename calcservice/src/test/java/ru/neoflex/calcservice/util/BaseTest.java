@@ -1,4 +1,4 @@
-package ru.neoflex.calcservice;
+package ru.neoflex.calcservice.util;
 
 import ru.neoflex.calcservice.dto.request.LoanStatementRequestDto;
 import ru.neoflex.calcservice.dto.request.ScoringDataDto;
