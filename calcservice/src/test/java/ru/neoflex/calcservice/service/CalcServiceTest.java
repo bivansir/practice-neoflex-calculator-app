@@ -1,9 +1,11 @@
 package ru.neoflex.calcservice.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.neoflex.calcservice.properties.CalcProperties;
 import ru.neoflex.calcservice.util.BaseTest;
 import ru.neoflex.calcservice.dto.request.LoanStatementRequestDto;
 import ru.neoflex.calcservice.dto.request.ScoringDataDto;
@@ -18,32 +20,39 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@TestPropertySource(properties = {
-        "calculator.insuranceCostMultiplier=0.01",
-        "calculator.insurancePacketCost=10000",
-        "calculator.commissionRate = 0.4",
-        "calculator.baseRate=0.25",
-        "calculator.minRate = 0.20",
-        "calculator.salaryClientDiscount=0.02",
-        "calculator.insurancePercentDiscount=0.01"
-})
+@ExtendWith(MockitoExtension.class)
 class CalcServiceTest extends BaseTest {
-    @Autowired
+    @Mock
+    private CalcProperties calcProperties;
+
+    @InjectMocks
     private CalcService calcService;
 
     @Test
-    void businessValidationExceptionTest() {
+    void businessValidationUnderAgeExceptionTest() {
+        //given
         LoanStatementRequestDto request = createDefaultLoanStatementRequestDto();
         request.setBirthdate(LocalDate.parse("25-08-2014", formatter));
+
+        //when
+        //then
         BusinessValidationException underAgeException = assertThrows(
                 BusinessValidationException.class,
                 () -> calcService.prescore(request)
         );
         assertEquals("birthdate: Клиент должен быть старше 18 лет", underAgeException.getMessage());
+    }
 
+    @Test
+    void businessValidationOverAgeExceptionTest() {
+        //given
+        LoanStatementRequestDto request = createDefaultLoanStatementRequestDto();
         request.setBirthdate(LocalDate.parse("25-08-1962", formatter));
+
+        //when
+        //then
         BusinessValidationException overAgeException = assertThrows(
                 BusinessValidationException.class,
                 () -> calcService.prescore(request)
@@ -52,51 +61,59 @@ class CalcServiceTest extends BaseTest {
     }
 
     @Test
-    void prescoreCalculatingTest() {
+    void prescoreDefaultCalculatingTest() {
+        //given
+        when(calcProperties.getInsurancePacketCost()).thenReturn(new BigDecimal("10000"));
+        when(calcProperties.getCommissionRate()).thenReturn(new BigDecimal("0.4"));
+        when(calcProperties.getBaseRate()).thenReturn(new BigDecimal("0.25"));
+        when(calcProperties.getMinRate()).thenReturn(new BigDecimal("0.20"));
+        when(calcProperties.getSalaryClientDiscount()).thenReturn(new BigDecimal("0.02"));
+        when(calcProperties.getSmallCreditLimit()).thenReturn(new BigDecimal("500000"));
+
         LoanStatementRequestDto request = createDefaultLoanStatementRequestDto();
+
+        //when
         List<LoanOfferDto> offers = calcService.prescore(request);
 
+        LoanOfferDto withBoth = offers.get(0);
+        LoanOfferDto withSalaryOnly = offers.get(1);
+        LoanOfferDto withInsuranceOnly = offers.get(2);
+        LoanOfferDto withoutDiscounts = offers.get(3);
+
+        //then
         assertEquals(4, offers.size());
 
-        LoanOfferDto withBoth = offers.get(0);
         assertEquals(new BigDecimal("0.226"), withBoth.getRate());
         assertEquals(new BigDecimal(1030000), withBoth.getTotalAmount());
         assertEquals(new BigDecimal(39657), withBoth.getMonthlyPayment());
 
-        LoanOfferDto withSalaryOnly = offers.get(1);
         assertEquals(new BigDecimal("0.230"), withSalaryOnly.getRate());
         assertEquals(new BigDecimal(1000000), withSalaryOnly.getTotalAmount());
         assertEquals(new BigDecimal(38710), withSalaryOnly.getMonthlyPayment());
 
-        LoanOfferDto withInsuranceOnly = offers.get(2);
         assertEquals(new BigDecimal("0.246"), withInsuranceOnly.getRate());
         assertEquals(new BigDecimal(1030000), withInsuranceOnly.getTotalAmount());
         assertEquals(new BigDecimal(40735), withInsuranceOnly.getMonthlyPayment());
 
-        LoanOfferDto withoutDiscounts = offers.get(3);
         assertEquals(new BigDecimal("0.250"), withoutDiscounts.getRate());
         assertEquals(new BigDecimal(1000000), withoutDiscounts.getTotalAmount());
         assertEquals(new BigDecimal(39760), withoutDiscounts.getMonthlyPayment());
     }
 
     @Test
-    void calcCalculatingTest() {
-        ScoringDataDto request = ScoringDataDto.builder()
-                .amount(BigDecimal.valueOf(1000000))
-                .term(6)
-                .firstName("Илья")
-                .lastName("Семёнов")
-                .middleName("Игоревич")
-                .birthdate(LocalDate.parse("25-08-2004", formatter))
-                .passportSeries("3232")
-                .passportNumber("123123")
-                .isInsuranceEnabled(false)
-                .isSalaryClient(false)
-                .build();
+    void BigCreditDefaultPaymentScheduleCalculatingTest() {
+        //given
+        when(calcProperties.getBaseRate()).thenReturn(new BigDecimal("0.25"));
+        when(calcProperties.getMinRate()).thenReturn(new BigDecimal("0.20"));
 
+        ScoringDataDto request = createScoringDataDto();
+
+        //when
         CreditDto credit = calcService.calc(request);
+
         List<PaymentScheduleElementDto> paymentSchedule = credit.getPaymentSchedule();
 
+        //then
         assertEquals(new BigDecimal("179028.00"), paymentSchedule.get(0).getTotalPayment());
         assertEquals(new BigDecimal("20833.33"), paymentSchedule.get(0).getInterestPayment());
         assertEquals(new BigDecimal("158194.67"), paymentSchedule.get(0).getDebtPayment());
@@ -126,6 +143,27 @@ class CalcServiceTest extends BaseTest {
         assertEquals(new BigDecimal("3653.66"), paymentSchedule.get(5).getInterestPayment());
         assertEquals(new BigDecimal("175375.65"), paymentSchedule.get(5).getDebtPayment());
         assertEquals(new BigDecimal("0.00"), paymentSchedule.get(5).getRemainingDebt());
+    }
+
+    @Test
+    void SmallCreditWithInsuranceRatePskCalculatingTest() {
+        //given
+        when(calcProperties.getBaseRate()).thenReturn(new BigDecimal("0.25"));
+        when(calcProperties.getMinRate()).thenReturn(new BigDecimal("0.20"));
+        when(calcProperties.getSmallCreditLimit()).thenReturn(new BigDecimal("500000"));
+        when(calcProperties.getInsuranceCostMultiplier()).thenReturn(new BigDecimal("0.01"));
+        when(calcProperties.getInsurancePercentDiscount()).thenReturn(new BigDecimal("0.01"));
+
+        ScoringDataDto request = createScoringDataDto();
+        request.setAmount(new BigDecimal("400000"));
+        request.setIsInsuranceEnabled(true);
+
+        //when
+        CreditDto creditDto = calcService.calc(request);
+
+        //then
+        assertEquals(new BigDecimal("402000"), creditDto.getPsk());
+        assertEquals(new BigDecimal("0.240"), creditDto.getRate());
     }
 }
 

@@ -33,7 +33,7 @@ public abstract class BaseTest {
     protected static ScoringDataDto createScoringDataDto() {
         return ScoringDataDto.builder()
                 .amount(BigDecimal.valueOf(1000000))
-                .term(36)
+                .term(6)
                 .firstName("Илья")
                 .lastName("Семенов")
                 .middleName("Игоревич")
