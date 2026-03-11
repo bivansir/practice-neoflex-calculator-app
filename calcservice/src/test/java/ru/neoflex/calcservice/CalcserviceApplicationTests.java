@@ -19,7 +19,7 @@ import ru.neoflex.calcservice.dto.request.ScoringDataDto;
 import ru.neoflex.calcservice.dto.response.CreditDto;
 import ru.neoflex.calcservice.dto.response.LoanOfferDto;
 import ru.neoflex.calcservice.dto.response.PaymentScheduleElementDto;
-import ru.neoflex.calcservice.service.BusinessValidationException;
+import ru.neoflex.calcservice.exception.BusinessValidationException;
 import ru.neoflex.calcservice.service.CalcService;
 
 import java.math.BigDecimal;

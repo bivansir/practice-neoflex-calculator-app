@@ -7,6 +7,8 @@ import ru.neoflex.calcservice.dto.request.ScoringDataDto;
 import ru.neoflex.calcservice.dto.response.CreditDto;
 import ru.neoflex.calcservice.dto.response.LoanOfferDto;
 import ru.neoflex.calcservice.dto.response.PaymentScheduleElementDto;
+import ru.neoflex.calcservice.exception.BusinessValidationException;
+import ru.neoflex.calcservice.properties.CalcProperties;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

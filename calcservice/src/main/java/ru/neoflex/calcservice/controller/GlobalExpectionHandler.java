@@ -9,7 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.neoflex.calcservice.service.BusinessValidationException;
+import ru.neoflex.calcservice.exception.BusinessValidationException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
