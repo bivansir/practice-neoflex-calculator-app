@@ -28,87 +28,57 @@ public class CalcService {
         this.properties = properties;
     }
 
-    private int calculateAge(LocalDate birthdate) {
-        return Period.between(birthdate, LocalDate.now()).getYears();
+    public List<LoanOfferDto> prescore(LoanStatementRequestDto request) {
+        validateAge(request.getBirthdate(), request.getTerm());
+        List<LoanOfferDto> offers = new ArrayList<>();
 
-    }
-
-    // Бизнес-валидация (прескоринг)
-    private void validateAge(LocalDate birthdate, Integer term) {
-        if (calculateAge(birthdate) < 18) {
-            throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
-        }
-        int ageAtCreditEnd = calculateAge(birthdate) + term / 12;
-        if (ageAtCreditEnd > 65) {
-            throw new BusinessValidationException("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет");
-        }
-    }
-
-    private BigDecimal calculateMonthlyRate(BigDecimal rate) {
-        return rate.divide(new BigDecimal(12), mc);
-    }
-
-    private BigDecimal calculateMonthlyPayment(BigDecimal rate, Integer term, BigDecimal amount) {
-        BigDecimal monthlyRate = calculateMonthlyRate(rate);
-        // (1 + monthlyRate)**term
-        BigDecimal termRateCoeff = (monthlyRate.add(new BigDecimal(1))).pow(term);
-        // i * (1 + monthlyRate)**term / (1 + monthlyRate)**2 - 1
-        BigDecimal paymentCoeff = monthlyRate.multiply(termRateCoeff).divide(termRateCoeff.subtract(new BigDecimal(1)), mc);
-
-        return amount.multiply(paymentCoeff).setScale(0, RoundingMode.HALF_UP);
-    }
-
-    // Расчет скидки при пакетной страховки
-    private BigDecimal calculateInsuranceDiscount(Integer term, BigDecimal amount) {
-        BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
-        BigDecimal insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
-        BigDecimal bankInsuranceEarning = properties.getCommissionRate().multiply(insuranceCost);
-
-        // discount = ((insuranceEarning) / amount) * (1 / termInYears)
-        BigDecimal discount = (bankInsuranceEarning.divide(
-                amount, mc)).multiply(new BigDecimal(1).divide(termInYears, mc));
-        if (discount.compareTo(BigDecimal.ZERO) < 0) {
-            return new BigDecimal(0);
-        }
-
-        return discount;
-    }
-
-    private BigDecimal calculateRate(Boolean isInsuranceEnabled, Boolean isSalaryClient, BigDecimal requestAmount, Integer term) {
-        BigDecimal insuranceDiscount = new BigDecimal(0);
-        BigDecimal salaryClientDiscount = new BigDecimal(0);
-        if (isInsuranceEnabled) {
-            if (requestAmount.compareTo(new BigDecimal(500000)) < 0) {
-                insuranceDiscount = properties.getInsurancePercentDiscount();
-            } else {
-                insuranceDiscount = calculateInsuranceDiscount(term, requestAmount);
+        for (boolean isInsuranceEnabled : Arrays.asList(false, true)) {
+            for (boolean isSalaryClient : Arrays.asList(false, true)) {
+                LoanOfferDto offer = createOffer(request, isInsuranceEnabled, isSalaryClient);
+                offers.add(offer);
             }
         }
-        if (isSalaryClient) {
-            salaryClientDiscount = properties.getSalaryClientDiscount();
-        }
-        BigDecimal rate = properties.getBaseRate().subtract(insuranceDiscount).subtract(salaryClientDiscount);
-        if (rate.compareTo(properties.getMinRate()) < 0) {
-            rate = properties.getMinRate();
-        }
 
-        return rate;
+        offers.sort(Comparator
+                .comparing(LoanOfferDto::getRate) // по ставке (меньше = лучше)
+                .thenComparing(
+                        offer -> offer.getTotalAmount().subtract(offer.getRequestedAmount()),
+                        Comparator.reverseOrder() // по разнице (больше = хуже)
+                )
+        );
+
+        return offers;
     }
 
-    // Расчет полной цены кредита
-    private BigDecimal calculateAmount(Boolean isInsuranceEnabled, BigDecimal requestedAmount, Integer term) {
-        BigDecimal totalAmount = requestedAmount;
-        if (isInsuranceEnabled) {
-            BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
-            BigDecimal insuranceCost;
-            if (requestedAmount.compareTo(properties.getSmallCreditLimit()) < 0) {
-                insuranceCost = requestedAmount.multiply(properties.getInsuranceCostMultiplier()).multiply(termInYears);
-            } else {
-                insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
-            }
-            totalAmount = requestedAmount.add(insuranceCost);
-        }
-        return totalAmount;
+    public CreditDto calc(ScoringDataDto request) {
+        Integer term = request.getTerm();
+
+        validateAge(request.getBirthdate(), term);
+
+        BigDecimal amount = request.getAmount();
+        Boolean isInsuranceEnabled = request.getIsInsuranceEnabled();
+        Boolean isSalaryClient = request.getIsSalaryClient();
+        BigDecimal psk = calculateAmount(isInsuranceEnabled, amount, term);
+        log.debug("Credit psk: {}",
+                psk);
+        BigDecimal rate = calculateRate(isInsuranceEnabled, isSalaryClient, amount, term);
+        log.debug("Credit rate: {}",
+                rate);
+        BigDecimal monthlyPayment = calculateMonthlyPayment(rate, term, psk);
+        log.debug("Credit monthlyPayment: {}",
+                monthlyPayment);
+        List<PaymentScheduleElementDto> paymentSchedule = calculatePaymentSchedule(monthlyPayment, term, psk, rate);
+
+        return CreditDto.builder()
+                .amount(amount)
+                .term(term)
+                .monthlyPayment(monthlyPayment)
+                .rate(rate)
+                .psk(psk)
+                .isInsuranceEnabled(isInsuranceEnabled)
+                .isSalaryClient(isSalaryClient)
+                .paymentSchedule(paymentSchedule)
+                .build();
     }
 
     private LoanOfferDto createOffer(LoanStatementRequestDto request, Boolean isInsuranceEnabled, Boolean isSalaryClient) {
@@ -186,56 +156,85 @@ public class CalcService {
         return paymentSchedule;
     }
 
-    public List<LoanOfferDto> prescore(LoanStatementRequestDto request) {
-        validateAge(request.getBirthdate(), request.getTerm());
-        List<LoanOfferDto> offers = new ArrayList<>();
-
-        for (boolean isInsuranceEnabled : Arrays.asList(false, true)) {
-            for (boolean isSalaryClient : Arrays.asList(false, true)) {
-                LoanOfferDto offer = createOffer(request, isInsuranceEnabled, isSalaryClient);
-                offers.add(offer);
+    private BigDecimal calculateRate(Boolean isInsuranceEnabled, Boolean isSalaryClient, BigDecimal requestAmount, Integer term) {
+        BigDecimal insuranceDiscount = new BigDecimal(0);
+        BigDecimal salaryClientDiscount = new BigDecimal(0);
+        if (isInsuranceEnabled) {
+            if (requestAmount.compareTo(new BigDecimal(500000)) < 0) {
+                insuranceDiscount = properties.getInsurancePercentDiscount();
+            } else {
+                insuranceDiscount = calculateInsuranceDiscount(term, requestAmount);
             }
         }
+        if (isSalaryClient) {
+            salaryClientDiscount = properties.getSalaryClientDiscount();
+        }
+        BigDecimal rate = properties.getBaseRate().subtract(insuranceDiscount).subtract(salaryClientDiscount);
+        if (rate.compareTo(properties.getMinRate()) < 0) {
+            rate = properties.getMinRate();
+        }
 
-        offers.sort(Comparator
-                .comparing(LoanOfferDto::getRate) // по ставке (меньше = лучше)
-                .thenComparing(
-                        offer -> offer.getTotalAmount().subtract(offer.getRequestedAmount()),
-                        Comparator.reverseOrder() // по разнице (больше = хуже)
-                )
-        );
-
-        return offers;
+        return rate;
     }
 
-    public CreditDto calc(ScoringDataDto request) {
-        Integer term = request.getTerm();
+    // Расчет полной цены кредита
+    private BigDecimal calculateAmount(Boolean isInsuranceEnabled, BigDecimal requestedAmount, Integer term) {
+        BigDecimal totalAmount = requestedAmount;
+        if (isInsuranceEnabled) {
+            BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
+            BigDecimal insuranceCost;
+            if (requestedAmount.compareTo(properties.getSmallCreditLimit()) < 0) {
+                insuranceCost = requestedAmount.multiply(properties.getInsuranceCostMultiplier()).multiply(termInYears);
+            } else {
+                insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
+            }
+            totalAmount = requestedAmount.add(insuranceCost);
+        }
+        return totalAmount;
+    }
 
-        validateAge(request.getBirthdate(), term);
+    private BigDecimal calculateMonthlyPayment(BigDecimal rate, Integer term, BigDecimal amount) {
+        BigDecimal monthlyRate = calculateMonthlyRate(rate);
+        // (1 + monthlyRate)**term
+        BigDecimal termRateCoeff = (monthlyRate.add(new BigDecimal(1))).pow(term);
+        // i * (1 + monthlyRate)**term / (1 + monthlyRate)**2 - 1
+        BigDecimal paymentCoeff = monthlyRate.multiply(termRateCoeff).divide(termRateCoeff.subtract(new BigDecimal(1)), mc);
 
-        BigDecimal amount = request.getAmount();
-        Boolean isInsuranceEnabled = request.getIsInsuranceEnabled();
-        Boolean isSalaryClient = request.getIsSalaryClient();
-        BigDecimal psk = calculateAmount(isInsuranceEnabled, amount, term);
-        log.debug("Credit psk: {}",
-                psk);
-        BigDecimal rate = calculateRate(isInsuranceEnabled, isSalaryClient, amount, term);
-        log.debug("Credit rate: {}",
-                rate);
-        BigDecimal monthlyPayment = calculateMonthlyPayment(rate, term, psk);
-        log.debug("Credit monthlyPayment: {}",
-                monthlyPayment);
-        List<PaymentScheduleElementDto> paymentSchedule = calculatePaymentSchedule(monthlyPayment, term, psk, rate);
+        return amount.multiply(paymentCoeff).setScale(0, RoundingMode.HALF_UP);
+    }
 
-        return CreditDto.builder()
-                .amount(amount)
-                .term(term)
-                .monthlyPayment(monthlyPayment)
-                .rate(rate)
-                .psk(psk)
-                .isInsuranceEnabled(isInsuranceEnabled)
-                .isSalaryClient(isSalaryClient)
-                .paymentSchedule(paymentSchedule)
-                .build();
+    // Расчет скидки при пакетной страховки
+    private BigDecimal calculateInsuranceDiscount(Integer term, BigDecimal amount) {
+        BigDecimal termInYears = BigDecimal.valueOf(term).divide(new BigDecimal(12), mc);
+        BigDecimal insuranceCost = properties.getInsurancePacketCost().multiply(termInYears);
+        BigDecimal bankInsuranceEarning = properties.getCommissionRate().multiply(insuranceCost);
+
+        // discount = ((insuranceEarning) / amount) * (1 / termInYears)
+        BigDecimal discount = (bankInsuranceEarning.divide(
+                amount, mc)).multiply(new BigDecimal(1).divide(termInYears, mc));
+        if (discount.compareTo(BigDecimal.ZERO) < 0) {
+            return new BigDecimal(0);
+        }
+
+        return discount;
+    }
+
+    private BigDecimal calculateMonthlyRate(BigDecimal rate) {
+        return rate.divide(new BigDecimal(12), mc);
+    }
+
+    private int calculateAge(LocalDate birthdate) {
+        return Period.between(birthdate, LocalDate.now()).getYears();
+
+    }
+    // Бизнес-валидация (прескоринг)
+    private void validateAge(LocalDate birthdate, Integer term) {
+        if (calculateAge(birthdate) < 18) {
+            throw new BusinessValidationException("birthdate: Клиент должен быть старше 18 лет");
+        }
+        int ageAtCreditEnd = calculateAge(birthdate) + term / 12;
+        if (ageAtCreditEnd > 65) {
+            throw new BusinessValidationException("birthdate: Возраст клиента на момент окончания кредита не может быть больше 65 лет");
+        }
     }
 }
