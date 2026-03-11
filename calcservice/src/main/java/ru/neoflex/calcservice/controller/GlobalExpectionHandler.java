@@ -37,7 +37,7 @@ public class GlobalExpectionHandler {
     }
 
     @ExceptionHandler(BusinessValidationException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessValidation(
+    public ResponseEntity<ErrorResponse> handleBusinessValidationExceptions(
             BusinessValidationException ex) {
 
         log.error("VALIDATION_ERROR: {}", ex.getMessage());
