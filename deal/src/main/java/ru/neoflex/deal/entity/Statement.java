@@ -8,7 +8,6 @@ import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.StatementStatusHistoryDto;
 import ru.neoflex.deal.entity.enums.ApplicationStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

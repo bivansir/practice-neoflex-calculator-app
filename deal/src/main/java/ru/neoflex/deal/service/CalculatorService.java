@@ -1,5 +1,6 @@
 package ru.neoflex.deal.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CalculatorService {
     private final RestClient restClient;
@@ -24,6 +26,8 @@ public class CalculatorService {
     }
 
     public List<LoanOfferDto> offers(LoanStatementRequestDto request) {
+        log.debug("Запрос подан в МС Калькулятор calculator/offers: {}",
+                request);
         List<LoanOfferDto> response = restClient.post()
                 .uri("/calculator/offers")
                 .body(request)
@@ -33,11 +37,15 @@ public class CalculatorService {
                 })
                 .body(new ParameterizedTypeReference<>() {
                 });
+        log.debug("Получен ответ от МС Калькулятор calculator/offers: {}",
+                response);
         return new ArrayList<>(response == null ? List.of() : response);
     }
 
     public CreditDto calc(ScoringDataDto request) {
-        return restClient.post()
+        log.debug("Запрос подан в МС Калькулятор calculator/calc: {}",
+                request);
+        CreditDto response = restClient.post()
                 .uri("/calculator/calc")
                 .body(request)
                 .retrieve()
@@ -46,6 +54,9 @@ public class CalculatorService {
                 })
                 .body(new ParameterizedTypeReference<>() {
                 });
+        log.debug("Получен ответ от МС Калькулятор calculator/calc: {}",
+                response);
+        return response;
     }
 
     private CalculatorServiceException extractError(ClientHttpResponse response) throws IOException {
