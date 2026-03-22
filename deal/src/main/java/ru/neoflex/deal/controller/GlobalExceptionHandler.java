@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         log.error("CALCULATOR_SERVICE_ERROR: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 ErrorResponseDto.builder()
-                        .code("VALIDATION_ERROR")
+                        .code("CALCULATOR_SERVICE_ERROR")
                         .message("Ошибка МС Калькулятор")
                         .details(ex.getDetails())
                         .timestamp(LocalDateTime.now())
