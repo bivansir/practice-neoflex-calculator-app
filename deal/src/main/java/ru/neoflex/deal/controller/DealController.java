@@ -18,7 +18,6 @@ import ru.neoflex.deal.dto.LoanStatementRequestDto;
 import ru.neoflex.deal.service.DealService;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
