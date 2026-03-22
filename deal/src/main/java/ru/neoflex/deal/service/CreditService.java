@@ -1,10 +1,12 @@
 package ru.neoflex.deal.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.deal.dto.CreditDto;
 import ru.neoflex.deal.entity.Credit;
 import ru.neoflex.deal.repository.CreditRepository;
 
+@Slf4j
 @Service
 public class CreditService {
     private final CreditRepository creditRepository;
@@ -24,6 +26,9 @@ public class CreditService {
                 .isInsuranceEnabled(request.getIsInsuranceEnabled())
                 .isSalaryClient(request.getIsSalaryClient())
                 .build();
-        return creditRepository.save(credit);
+        Credit saved = creditRepository.save(credit);
+        log.debug("Credit создан в БД: {}",
+                saved);
+        return saved;
     }
 }

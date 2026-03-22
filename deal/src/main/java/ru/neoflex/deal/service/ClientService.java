@@ -1,11 +1,13 @@
 package ru.neoflex.deal.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.deal.dto.LoanStatementRequestDto;
 import ru.neoflex.deal.entity.Client;
 import ru.neoflex.deal.entity.Passport;
 import ru.neoflex.deal.repository.ClientRepository;
 
+@Slf4j
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -27,6 +29,9 @@ public class ClientService {
                         .build())
                 .build();
 
-        return clientRepository.save(client);
+        Client saved = clientRepository.save(client);
+        log.debug("Credit создан в БД: {}",
+                saved);
+        return saved;
     }
 }

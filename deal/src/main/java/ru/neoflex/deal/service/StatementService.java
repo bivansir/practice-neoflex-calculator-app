@@ -1,5 +1,6 @@
 package ru.neoflex.deal.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.StatementStatusHistoryDto;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class StatementService {
 
@@ -39,8 +41,10 @@ public class StatementService {
                         .changeType(changeType)
                         .build()))
                 .build();
-
-        return statementRepository.save(statement);
+        Statement saved = statementRepository.save(statement);
+        log.debug("Statement создана в БД: {}",
+                saved);
+        return saved;
     }
 
     public Statement approveStatement(LoanOfferDto loanOfferDto) {
@@ -49,7 +53,10 @@ public class StatementService {
         updateStatementStatus(statement, ApplicationStatus.APPROVED, ChangeType.MANUAL);
         statement.setAppliedOffer(loanOfferDto);
 
-        return statementRepository.save(statement);
+        Statement saved = statementRepository.save(statement);
+        log.debug("Statement обновлена в БД (approve): {}",
+                saved);
+        return saved;
     }
 
     public Statement ccApproveStatement(UUID id, Credit credit) {
@@ -58,7 +65,10 @@ public class StatementService {
         updateStatementStatus(statement, ApplicationStatus.CC_APPROVED, ChangeType.AUTOMATIC);
         statement.setCredit(credit);
 
-        return statementRepository.save(statement);
+        Statement saved = statementRepository.save(statement);
+        log.debug("Statement обновлена в БД (cc_approve): {}",
+                saved);
+        return saved;
     }
 
     private void updateStatementStatus(Statement statement, ApplicationStatus applicationStatus, ChangeType changeType) {
@@ -71,5 +81,7 @@ public class StatementService {
                 .changeType(changeType)
                 .build());
         statement.setStatusHistory(updatedHistory);
+        log.debug("statementStatusHistory обновлена в БД для {}: {}",
+                statement.getStatementId(), updatedHistory);
     }
 }
