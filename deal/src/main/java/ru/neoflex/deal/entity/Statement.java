@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Statement {
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "statement_id")
     private UUID statementId;
 
@@ -32,24 +32,29 @@ public class Statement {
 
     @OneToOne
     @Setter
+    @Getter
     @JoinColumn(name = "credit_id", referencedColumnName = "credit_id", unique = true)
     private Credit credit;
 
     @Enumerated(EnumType.STRING)
     @Setter
+    @Getter
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
+    @Getter
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
     //TODO: возможно добавить отдельную entity для dto
     @Setter
+    @Getter
     @Column(name = "applied_offer", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
     private LoanOfferDto appliedOffer;
 
     //TODO: втф
+    @Getter
     @Column(name = "ses_code", nullable = false)
     private String sesCode;
 

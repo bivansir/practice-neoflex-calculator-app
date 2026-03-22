@@ -22,7 +22,7 @@ import java.util.UUID;
 @Table(name = "client")
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Getter
     @Column(name = "client_id")
     private UUID clientId;
@@ -43,6 +43,7 @@ public class Client {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
+    @Getter
     @Column(name = "email", nullable = false)
     private String email;
 
