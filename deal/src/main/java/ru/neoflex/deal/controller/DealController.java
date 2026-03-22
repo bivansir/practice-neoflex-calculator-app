@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class DealController {
                     required = true,
                     schema = @Schema(implementation = LoanStatementRequestDto.class)
             )
-            @RequestBody LoanStatementRequestDto request) {
+            @RequestBody @Valid LoanStatementRequestDto request) {
         log.info("Входные данные приняты {}", request.toString());
         List<LoanOfferDto> offers = dealService.deal(request);
         log.info("Выходные данные получены {}", offers.toString());
@@ -73,7 +74,7 @@ public class DealController {
                     required = true,
                     schema = @Schema(implementation = LoanOfferDto.class)
             )
-            @RequestBody LoanOfferDto request) {
+            @RequestBody @Valid LoanOfferDto request) {
         log.info("Входные данные приняты {}", request.toString());
         dealService.select(request);
         log.info("Запрос обработан");
