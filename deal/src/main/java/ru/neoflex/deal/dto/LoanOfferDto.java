@@ -1,5 +1,6 @@
 package ru.neoflex.deal.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,27 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class LoanOfferDto {
+    @NotNull
     private UUID statementId;
+
+    @NotNull
     private BigDecimal requestedAmount;
+
+    @NotNull
     private BigDecimal totalAmount;
+
+    @NotNull
     private Integer term;
+
+    @NotNull
     private BigDecimal monthlyPayment;
+
+    @NotNull
     private BigDecimal rate;
+
+    @NotNull
     private Boolean isInsuranceEnabled;
+
+    @NotNull
     private Boolean isSalaryClient;
 }
