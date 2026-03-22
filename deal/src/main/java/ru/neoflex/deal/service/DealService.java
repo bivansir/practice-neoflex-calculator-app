@@ -3,22 +3,16 @@ package ru.neoflex.deal.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.neoflex.deal.dto.CreditDto;
 import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.LoanStatementRequestDto;
 import ru.neoflex.deal.dto.ScoringDataDto;
 import ru.neoflex.deal.entity.Client;
 import ru.neoflex.deal.entity.Credit;
-import ru.neoflex.deal.entity.Passport;
 import ru.neoflex.deal.entity.Statement;
-import ru.neoflex.deal.entity.enums.ApplicationStatus;
-import ru.neoflex.deal.repository.ClientRepository;
-import ru.neoflex.deal.repository.StatementRepository;
-
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +23,7 @@ public class DealService {
     private final CreditService creditService;
     private final CalculatorService calculatorService;
 
+    @Transactional(rollbackFor = Exception.class)
     public List<LoanOfferDto> deal(LoanStatementRequestDto request) {
         Client client = clientService.createClient(request);
         Statement statement = statementService.createStatement(client);
@@ -47,10 +42,9 @@ public class DealService {
         return response;
     }
 
-    public HttpStatus select(LoanOfferDto request, UUID offerId) {
-        UUID statementId = request.getStatementId();
-
-        Statement statement = statementService.approveStatement(request.getStatementId(), request);
+    @Transactional(rollbackFor = Exception.class)
+    public HttpStatus select(LoanOfferDto request) {
+        Statement statement = statementService.approveStatement(request);
         Client client = statement.getClient();
 
         ScoringDataDto scoringDataDto = ScoringDataDto.builder()
@@ -69,7 +63,7 @@ public class DealService {
         CreditDto response = calculatorService.calc(scoringDataDto);
 
         Credit credit = creditService.createCredit(response);
-        statementService.ccApproveStatement(statementId, credit);
+        statementService.ccApproveStatement(request.getStatementId(), credit);
 
         return HttpStatus.OK;
     }

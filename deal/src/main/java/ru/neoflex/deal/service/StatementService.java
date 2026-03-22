@@ -11,6 +11,7 @@ import ru.neoflex.deal.entity.enums.ChangeType;
 import ru.neoflex.deal.repository.StatementRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,8 +43,8 @@ public class StatementService {
         return statementRepository.save(statement);
     }
 
-    public Statement approveStatement(UUID id, LoanOfferDto loanOfferDto) {
-        Statement statement = statementRepository.getReferenceById(id);
+    public Statement approveStatement(LoanOfferDto loanOfferDto) {
+        Statement statement = statementRepository.getReferenceById(loanOfferDto.getStatementId());
 
         updateStatementStatus(statement, ApplicationStatus.APPROVED, ChangeType.MANUAL);
         statement.setAppliedOffer(loanOfferDto);
@@ -63,7 +64,7 @@ public class StatementService {
     private void updateStatementStatus(Statement statement, ApplicationStatus applicationStatus, ChangeType changeType) {
         statement.setApplicationStatus(applicationStatus);
 
-        List<StatementStatusHistoryDto> updatedHistory = statement.getStatusHistory();
+        List<StatementStatusHistoryDto> updatedHistory = new ArrayList<>(statement.getStatusHistory());
         updatedHistory.add(StatementStatusHistoryDto.builder()
                 .status(applicationStatus)
                 .time(LocalDateTime.now())

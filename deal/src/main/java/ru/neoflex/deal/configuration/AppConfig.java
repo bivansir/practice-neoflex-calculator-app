@@ -14,7 +14,7 @@ public class AppConfig {
     @Bean
     public RestClient restClient() {
         return RestClient.builder()
-                .baseUrl(calculatorServiceUrl) // Базовый URL для всех запросов
+                .baseUrl(calculatorServiceUrl)
                 .defaultHeader("Content-Type", "application/json")
                 .defaultHeader("Accept", "application/json")
                 .build();

@@ -10,6 +10,7 @@ import ru.neoflex.deal.exception.CalculatorServiceException;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,7 @@ public class CalculatorService {
     }
 
     public List<LoanOfferDto> offers(LoanStatementRequestDto request) {
-        return restClient.post()
+        List<LoanOfferDto> response = restClient.post()
                 .uri("/calculator/offers")
                 .body(request)
                 .retrieve()
@@ -32,6 +33,7 @@ public class CalculatorService {
                 })
                 .body(new ParameterizedTypeReference<>() {
                 });
+        return new ArrayList<>(response == null ? List.of() : response);
     }
 
     public CreditDto calc(ScoringDataDto request) {
