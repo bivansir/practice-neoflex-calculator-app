@@ -2,6 +2,7 @@ package ru.neoflex.deal.service.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.neoflex.deal.dto.LoanStatementRequestDto;
 import ru.neoflex.deal.entity.Client;
 import ru.neoflex.deal.repository.ClientRepository;
@@ -13,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
+@DirtiesContext(
+        classMode = DirtiesContext.ClassMode.AFTER_CLASS
+)
 public class ClientServiceTest extends IntegrationTestBase {
 
     @Autowired

@@ -1,11 +1,9 @@
 package ru.neoflex.deal.service.integration;
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.PaymentScheduleElementDto;
 import ru.neoflex.deal.dto.StatementStatusHistoryDto;
@@ -25,9 +23,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Testcontainers
-@Transactional
+@DirtiesContext(
+        classMode = DirtiesContext.ClassMode.AFTER_CLASS
+)
 public class StatementServiceIntegrationTest extends IntegrationTestBase {
 
     @Autowired

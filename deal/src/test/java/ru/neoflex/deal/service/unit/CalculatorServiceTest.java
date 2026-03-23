@@ -73,7 +73,7 @@ public class CalculatorServiceTest {
     void shouldReturnCredit() {
         // given
         String exceptedResponse = Files.readString(Paths.get(
-                "src/test/resources/should_return_credit-excepted_response.json.json"));
+                "src/test/resources/should_return_credit-excepted_response.json"));
 
         server.expect(requestTo("http://localhost/calculator/calc"))
                 .andExpect(method(HttpMethod.POST))
@@ -93,7 +93,7 @@ public class CalculatorServiceTest {
     void shouldThrowExceptionTest() {
         // given
         String errorJson = Files.readString(Paths.get(
-                "src/test/resources/should_throw_exception-error_json.json"));
+                "src/test/resources/should_throw_exception-error.json"));
 
         server.expect(requestTo("http://localhost/calculator/offers"))
                 .andExpect(method(HttpMethod.POST))
