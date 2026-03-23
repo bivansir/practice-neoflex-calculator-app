@@ -43,7 +43,7 @@ public class DealService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public HttpStatus select(LoanOfferDto request) {
+    public void select(LoanOfferDto request) {
         Statement statement = statementService.approveStatement(request);
         Client client = statement.getClient();
 
@@ -64,7 +64,5 @@ public class DealService {
 
         Credit credit = creditService.createCredit(response);
         statementService.ccApproveStatement(request.getStatementId(), credit);
-
-        return HttpStatus.OK;
     }
 }

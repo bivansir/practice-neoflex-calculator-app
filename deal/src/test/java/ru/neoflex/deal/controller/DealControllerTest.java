@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -131,8 +131,6 @@ public class DealControllerTest {
                 .isInsuranceEnabled(true)
                 .isSalaryClient(true)
                 .build();
-        when(dealService.select(any(LoanOfferDto.class)))
-                .thenReturn(HttpStatus.OK);
 
         // when
         mockMvc.perform(post("/deal/select")
@@ -168,8 +166,9 @@ public class DealControllerTest {
         ErrorResponseDto error = ErrorResponseDto.builder()
                 .message("Ошибка")
                 .build();
-        when(dealService.select(any()))
-                .thenThrow(new CalculatorServiceException(error));
+        doThrow(new CalculatorServiceException(error))
+                .when(dealService)
+                .select(any());
 
         //when
         mockMvc.perform(post("/deal/select")
@@ -196,8 +195,9 @@ public class DealControllerTest {
     @SneakyThrows
     void endpointOtherExceptionsTest() {
         //given
-        when(dealService.select(any()))
-                .thenThrow(new RuntimeException("Непредвиденная ошибка"));
+        doThrow(new RuntimeException("Непредвиденная ошибка"))
+                .when(dealService)
+                .select(any());
 
         //when
         mockMvc.perform(post("/deal/select")
