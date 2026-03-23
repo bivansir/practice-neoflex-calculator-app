@@ -1,5 +1,6 @@
 package ru.neoflex.deal.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.deal.dto.LoanOfferDto;
@@ -17,14 +18,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class StatementService {
 
     private final StatementRepository statementRepository;
-
-    public StatementService(StatementRepository statementRepository) {
-        this.statementRepository = statementRepository;
-    }
 
     public Statement createStatement(Client client) {
         ApplicationStatus applicationStatus = ApplicationStatus.PREAPPROVAL;

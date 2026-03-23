@@ -1,5 +1,6 @@
 package ru.neoflex.deal.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.deal.dto.CreditDto;
@@ -7,13 +8,10 @@ import ru.neoflex.deal.entity.Credit;
 import ru.neoflex.deal.repository.CreditRepository;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class CreditService {
     private final CreditRepository creditRepository;
-
-    public CreditService(CreditRepository creditRepository) {
-        this.creditRepository = creditRepository;
-    }
 
     public Credit createCredit(CreditDto request) {
         Credit credit = Credit.builder()

@@ -1,5 +1,6 @@
 package ru.neoflex.deal.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
@@ -15,15 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class CalculatorService {
     private final RestClient restClient;
     private final ObjectMapper objectMapper;
-
-    public CalculatorService(RestClient restClient, ObjectMapper objectMapper) {
-        this.restClient = restClient;
-        this.objectMapper = objectMapper;
-    }
 
     public List<LoanOfferDto> offers(LoanStatementRequestDto request) {
         log.debug("Запрос подан в МС Калькулятор calculator/offers: {}",
