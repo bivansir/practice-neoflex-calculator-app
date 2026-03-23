@@ -2,6 +2,7 @@ package ru.neoflex.deal.service.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.neoflex.deal.dto.CreditDto;
 import ru.neoflex.deal.dto.PaymentScheduleElementDto;
 import ru.neoflex.deal.entity.Credit;
@@ -13,7 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@DirtiesContext(
+        classMode = DirtiesContext.ClassMode.AFTER_CLASS
+)
 class CreditServiceIntegrationTest extends IntegrationTestBase {
 
     @Autowired

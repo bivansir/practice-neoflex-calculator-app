@@ -50,9 +50,9 @@ public class DealController {
                     schema = @Schema(implementation = LoanStatementRequestDto.class)
             )
             @RequestBody @Valid LoanStatementRequestDto request) {
-        log.info("Входные данные приняты {}", request.toString());
+        log.info("Входные данные приняты {}", request);
         List<LoanOfferDto> offers = dealService.deal(request);
-        log.info("Выходные данные получены {}", offers.toString());
+        log.info("Выходные данные получены {}", offers);
         return ResponseEntity.ok(offers);
     }
 
@@ -68,16 +68,16 @@ public class DealController {
             )
 
     })
-    public HttpStatus selectStatement(
+    public ResponseEntity<HttpStatus> selectStatement(
             @Parameter(
                     description = "Выбранное кредитное предложение",
                     required = true,
                     schema = @Schema(implementation = LoanOfferDto.class)
             )
             @RequestBody @Valid LoanOfferDto request) {
-        log.info("Входные данные приняты {}", request.toString());
+        log.info("Входные данные приняты {}", request);
         dealService.select(request);
         log.info("Запрос обработан");
-        return HttpStatus.OK;
+        return ResponseEntity.ok().build();
     }
 }

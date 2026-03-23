@@ -6,7 +6,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import ru.neoflex.deal.dto.CreditDto;
 import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.LoanStatementRequestDto;
@@ -107,11 +106,9 @@ public class DealServiceTest {
         when(statementService.ccApproveStatement(any(), any())).thenReturn(any());
 
         // when
-        HttpStatus httpStatus = dealService.select(request);
+        dealService.select(request);
 
         // then
-        assertEquals(HttpStatus.OK, httpStatus);
-
         ArgumentCaptor<ScoringDataDto> captor = ArgumentCaptor.forClass(ScoringDataDto.class);
         verify(calculatorService).calc(captor.capture());
 
