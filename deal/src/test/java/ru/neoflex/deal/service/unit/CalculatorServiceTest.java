@@ -18,6 +18,8 @@ import ru.neoflex.deal.exception.CalculatorServiceException;
 import ru.neoflex.deal.service.CalculatorService;
 import tools.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -46,18 +48,11 @@ public class CalculatorServiceTest {
     }
 
     @Test
+    @SneakyThrows
     void shouldReturnOffers() {
         // given
-        String exceptedResponse = """
-                [
-                  {
-                    "requestedAmount": 1
-                  },
-                  {
-                    "requestedAmount": 2
-                  }
-                ]
-                """;
+        String exceptedResponse = Files.readString(Paths.get(
+                "src/test/resources/should_return_offers-excepted_response.json"));
 
         server.expect(requestTo("http://localhost/calculator/offers"))
                 .andExpect(method(HttpMethod.POST))
@@ -74,13 +69,11 @@ public class CalculatorServiceTest {
     }
 
     @Test
+    @SneakyThrows
     void shouldReturnCredit() {
         // given
-        String exceptedResponse = """
-                  {
-                    "amount": 1
-                  }
-                """;
+        String exceptedResponse = Files.readString(Paths.get(
+                "src/test/resources/should_return_credit-excepted_response.json.json"));
 
         server.expect(requestTo("http://localhost/calculator/calc"))
                 .andExpect(method(HttpMethod.POST))
@@ -99,11 +92,8 @@ public class CalculatorServiceTest {
     @SneakyThrows
     void shouldThrowExceptionTest() {
         // given
-        String errorJson = """
-                {
-                  "code": "BAD_REQUEST"
-                }
-                """;
+        String errorJson = Files.readString(Paths.get(
+                "src/test/resources/should_throw_exception-error_json.json"));
 
         server.expect(requestTo("http://localhost/calculator/offers"))
                 .andExpect(method(HttpMethod.POST))
