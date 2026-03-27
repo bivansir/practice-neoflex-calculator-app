@@ -34,7 +34,7 @@ class CalcServiceTest extends BaseTest {
     void businessValidationUnderAgeExceptionTest() {
         //given
         LoanStatementRequestDto request = createDefaultLoanStatementRequestDto();
-        request.setBirthdate(LocalDate.parse("25-08-2014", formatter));
+        request.setBirthdate(LocalDate.parse("2014-08-25", formatter));
 
         //when
         //then
@@ -49,7 +49,7 @@ class CalcServiceTest extends BaseTest {
     void businessValidationOverAgeExceptionTest() {
         //given
         LoanStatementRequestDto request = createDefaultLoanStatementRequestDto();
-        request.setBirthdate(LocalDate.parse("25-08-1962", formatter));
+        request.setBirthdate(LocalDate.parse("1962-08-25", formatter));
 
         //when
         //then

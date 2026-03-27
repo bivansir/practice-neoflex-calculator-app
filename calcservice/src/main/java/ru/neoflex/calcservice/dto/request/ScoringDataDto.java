@@ -44,9 +44,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "Дата рождения требуется")
     @Past(message = "Дата рождения должна быть в прошлом")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @Schema(example = "25-08-2004")
+    @Schema(example = "2004-08-25")
     private LocalDate birthdate;
 
     @NotBlank(message = "Серия паспорта требуется")

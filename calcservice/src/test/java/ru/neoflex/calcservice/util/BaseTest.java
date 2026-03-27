@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public abstract class BaseTest {
 
-    protected static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    protected static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     protected static LoanStatementRequestDto createDefaultLoanStatementRequestDto() {
         return LoanStatementRequestDto.builder()
@@ -24,7 +24,7 @@ public abstract class BaseTest {
                 .lastName("Семенов")
                 .middleName("Игоревич")
                 .email("bivansir@gmail.com")
-                .birthdate(LocalDate.parse("25-08-2004", formatter))
+                .birthdate(LocalDate.parse("2004-08-25", formatter))
                 .passportSeries("3232")
                 .passportNumber("123123")
                 .build();
@@ -37,7 +37,7 @@ public abstract class BaseTest {
                 .firstName("Илья")
                 .lastName("Семенов")
                 .middleName("Игоревич")
-                .birthdate(LocalDate.parse("25-08-2004", formatter))
+                .birthdate(LocalDate.parse("2004-08-25", formatter))
                 .passportSeries("3232")
                 .passportNumber("123123")
                 .isInsuranceEnabled(false)
@@ -62,7 +62,7 @@ public abstract class BaseTest {
         List<PaymentScheduleElementDto> paymentSchedule = List.of(
                 PaymentScheduleElementDto.builder()
                         .number(1)
-                        .date(LocalDate.parse("25-08-2004", formatter))
+                        .date(LocalDate.parse("2004-08-25", formatter))
                         .totalPayment(BigDecimal.valueOf(12000))
                         .interestPayment(BigDecimal.valueOf(12000))
                         .debtPayment(BigDecimal.valueOf(12000))
