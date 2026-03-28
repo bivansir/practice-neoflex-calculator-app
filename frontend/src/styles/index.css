@@ -1,0 +1,39 @@
+@import '../styles/fonts.css';
+
+:root {
+--bg-primary: #F5F4FF;
+
+--logo: #B4387A;
+
+--text-primary: #000000;
+--text-secoundary: #434343;
+
+--nav-link: #1D1929;
+--nav-link-active: #B2A35F;
+
+--button-bg: #003CFF;
+--button-text: #FFFFFF;
+
+--input-bg: #F9F5E3;
+--input-border: #80808033;
+--input-placeholder: #808080;
+--input-label: #1A202C;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    line-height: 112.00000000000001%;
+    letter-spacing: 2%;
+    background: var(--bg-primary);
+    
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
