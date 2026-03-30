@@ -2,7 +2,6 @@
   font-family: "Ubuntu";
   src: url('../assets/fonts/Ubuntu-Bold.woff2') format('woff2');
   font-weight: 700;
-  font-style: bold;
   font-display: swap;
 }
 
@@ -10,7 +9,6 @@
   font-family: "Ubuntu";
   src: url('../assets/fonts/Ubuntu-Medium.woff2') format('woff2');
   font-weight: 500;
-  font-style: medium;
   font-display: swap;
 }
 
@@ -18,6 +16,5 @@
   font-family: "Ubuntu";
   src: url('../assets/fonts/Ubuntu-Regular.woff2') format('woff2');
   font-weight: 400;
-  font-style: regular;
   font-display: swap;
 }
