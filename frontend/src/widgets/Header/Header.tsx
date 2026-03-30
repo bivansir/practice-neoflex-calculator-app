@@ -1,4 +1,4 @@
-import { Button } from "../../shared/Button";
+import { Button } from "../../shared/Button/Button";
 import { Logo } from "./Logo";
 import { Navigation } from "./Navigation";
 import './Header.css';
@@ -8,7 +8,7 @@ export const Header = () => {
         <header className="header">
             <Logo />
             <Navigation />
-            <Button />
+            <Button name="Online Bank" />
         </header>
     )
 };

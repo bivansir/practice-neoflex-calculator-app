@@ -16,7 +16,7 @@ export const Navigation = () => {
                 <NavLink
                     to={link.path}
                     className={({ isActive }) => 
-                        `nav__link${isActive ? '--active' : ''}`
+                        `nav__link${isActive ? ' nav__link--active' : ''}`
                     }
                 >
                     {link.label}
