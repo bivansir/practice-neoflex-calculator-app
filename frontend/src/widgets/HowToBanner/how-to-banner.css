@@ -1,0 +1,54 @@
+.how-to-banner {
+    margin-top: 96px;
+    justify-items: center;
+}
+
+.how-to-banner__title {
+    margin-bottom: 14px;
+}
+
+
+.how-to-banner__step-list {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 110px;
+    list-style-type: none;
+}
+
+.how-to-banner__step-number-container {
+    display: flex;
+    align-items: center;
+}
+
+
+.how-to-banner__step-number {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #D9D9D9;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.how-to-banner__step-line {
+    height: 2px;
+    flex-grow: 1;
+    margin-left: 36px;
+    background-color: #D9D9D9;
+}
+.how-to-banner__step-description {
+    text-align: center;
+    line-height: 147%;
+    letter-spacing: 0%;
+    margin-top: 20px;
+}
+
+.how-to-banner__step-item {
+    display: flex;
+} 
