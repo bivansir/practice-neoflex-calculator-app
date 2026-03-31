@@ -12,11 +12,13 @@ export const CreditCardHero = () => {
                 <div>
                     <p className="credit-card-hero__description">
                         Our best credit card. Suitable for everyday spending and shopping.
+                    </p>
+                    <p className="credit-card-hero__description">
                         Cash withdrawals and transfers without commission and interest.
                     </p>
                     
                     <div className="credit-card-hero__subtitle-container">
-                        <div>
+                        <div className="credit-card-hero__subtitle-item">
                             <h3 className="credit-card-hero__subtitle">
                                 Up to 160 days
                             </h3>
@@ -24,7 +26,7 @@ export const CreditCardHero = () => {
                                 No percent
                             </p>
                         </div>
-                        <div>
+                        <div className='credit-card-hero__subtitle-item'>
                             <h3 className="credit-card-hero__subtitle">
                                 Up to 600 000 ₽
                             </h3>
@@ -32,7 +34,7 @@ export const CreditCardHero = () => {
                                 Credit limit
                             </p>
                         </div>
-                        <div>
+                        <div className='credit-card-hero__subtitle-item'>
                             <h3 className="credit-card-hero__subtitle">
                                 0 ₽
                             </h3>
