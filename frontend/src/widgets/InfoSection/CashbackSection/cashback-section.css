@@ -1,0 +1,30 @@
+.cashback-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.cashback-section__item:nth-child(even) {
+    background-color: #EAECEE;
+}
+
+.cashback-section__item {
+    display: flex;
+    flex-direction: column;
+    background-color: #88B3B899;
+    padding: 32px;
+    border-radius: 28px;
+    box-shadow: 0px 2px 4px #00000033,
+                0px 0px 8px #00000014;
+}
+
+.cashback-section__description {
+    color: #434343E5;
+    padding-bottom: 22px;
+}
+
+.cashback-section__title {
+    font-size: 36px;
+    margin-top: auto;
+    
+}
