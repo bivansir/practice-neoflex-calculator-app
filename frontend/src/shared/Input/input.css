@@ -1,0 +1,28 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.input__label {
+    line-height: 100%;
+    letter-spacing: 0;
+    font-weight: 500;
+}
+
+.input__field {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px; 
+    padding: 8px 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.input--required .input__label::after {
+    content: '*';
+    color: #FF0000;
+    margin-left: 5px;
+}
+

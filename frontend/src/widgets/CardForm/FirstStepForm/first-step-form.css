@@ -1,0 +1,72 @@
+.first-step-form {
+    width: 100%;
+}
+
+.first-step-form__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.first-step-form__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.first-step-form__header-title {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.first-step-form__header-step {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 100%;
+
+}
+
+.horizontal-line {
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: var(--line);
+    max-width: 2px;
+    flex: 1;
+}
+
+.first-step-form__slider {
+    display: flex;
+}
+
+.card-form__header-step {
+    margin-left: 198px;
+}
+
+.first-step-form__amount::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: calc(100% - 50px);
+    height: 1px;
+    background-color: var(--line);
+
+}
+
+.first-step-form__amount {
+    position: relative;
+}
+
+
+.first-step-form__input-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
