@@ -1,41 +1,26 @@
-.header a {
-    font-weight: 700;
-}
-
-.header {
+header {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     max-width: 1300px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    margin-left: 214px;
-    margin-right: 214px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.4375rem 0 0.4375rem;
+    font-weight: 700;
 }
 
-.logo {
-    font-size: 24px; 
+.header__logo {
+    font-size: 1.5rem; 
     color: var(--logo);
-    vertical-align: middle;
-
-    /*width: 125px;*/
-    /*height: 15px;*/
 }
 
 .nav__list {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    font-size: 16px;
+    gap: 2.5rem;
 }
 
-
 .nav__link {
-    display: block;
-    padding: 10px;
-    white-space: nowrap;
     color: var(--nav-link);
 }
 
