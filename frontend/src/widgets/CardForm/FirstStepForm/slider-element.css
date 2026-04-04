@@ -3,13 +3,13 @@
 
     display: flex;
     flex-direction: column;
-    padding: 32px 32px 32px 32px;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
     border-radius: 10px;
     border: 1px solid var(--slider);
 }
 
 .slider__title {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
 .slider__input::-webkit-slider-runnable-track {
@@ -24,12 +24,11 @@
     border-radius: 50%;
     cursor: pointer;
     margin-top: -10px;
-    position: relative;
 }
 
 .slider__labels {
-    margin-top: 5px;
-    color: #786D6D;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    margin-top: 0.25rem;
+    color: #786D6D;
 }

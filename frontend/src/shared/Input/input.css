@@ -1,8 +1,7 @@
 .input {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-
+    gap: 0.5rem;
 }
 
 .input__label {
@@ -15,8 +14,8 @@
     background-color: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 4px; 
-    padding: 8px 12px;
-    font-size: 16px;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
     transition: all 0.3s ease;
 }
 

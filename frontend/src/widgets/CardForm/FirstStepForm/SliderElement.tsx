@@ -6,19 +6,21 @@ type SliderElementProps<T extends FieldValues> = {
     title: string;
     min: number;
     max: number;
+    step: number;
 }
 
-export const SliderElement = <T extends FieldValues>({ name, title, min, max} : SliderElementProps<T>) => {
+export const SliderElement = <T extends FieldValues>({ name, title, min, max, step} : SliderElementProps<T>) => {
     const { register, watch } = useFormContext();
     const value = watch(name);
     const percent = ((value - min) / (max - min)) * 100;
 
     return (
         <div className='slider'>
-            <p className='slider__title'>{title}</p>
-            <p className='slider__value'>{value}</p>
+            <p className='slider__title text'>{title}</p>
+            <p className='slider__value text'>{value}</p>
             <div className='slider__content'>
                 <input className='slider__input' type="range"
+                    step={step}
                     id={name}
                     min={min}
                     max={max} 
@@ -31,8 +33,8 @@ export const SliderElement = <T extends FieldValues>({ name, title, min, max} : 
                     }}
                      />
                 <div className='slider__labels'>
-                    <p className='slider_min'>{min}</p>
-                    <p className='slider_max'>{max}</p>
+                    <p className='slider_min text'>{min}</p>
+                    <p className='slider_max text'>{max}</p>
                 </div>
             </div>
         </div>

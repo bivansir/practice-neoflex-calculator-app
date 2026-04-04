@@ -44,29 +44,29 @@ export const FirstStepForm = () => {
     return (
         <FormProvider {...methods}>
             <form className='first-step-form'>
-                <div className='first-step-form__slider'>
-                    <div className='container' >
+                <div className='first-step-form__block--row'>
+                    <div className='first-step-form__slider'>
                         <div className='first-step-form__header'>
-                            <h2 className='first-step-form__header-title'>
+                            <h2 className='text text--spaced'>
                                 Customize your card
                             </h2>
-                            <label className='first-step-form__header-step'>Step 1 of 5</label>
+                            <p className='text text--spaced'>Step 1 of 5</p>
                         </div>
                         <SliderElement
                             name='amount'
-                            title="Amount"
+                            title="Select amount"
                             min={15000}
-                            max={600000}/>
+                            max={600000}
+                            step={1000}/>
                     </div>
-                    <div className='horizontal-line'></div>
                     <div className='first-step-form__summary'>
-                        <h3>You have chosen the amount</h3>
-                        <p className='first-step-form__amount'>{amount}</p>
+                        <h3 className='text text--spaced'>You have chosen the amount</h3>
+                        <p className='first-step-form__amount text text--spaced'>{amount}</p>
                     </div>
                 </div>
-                <div className='first-step-form__input'>
-                    <h2>Contact Information</h2>
-                    <div className='first-step-form__input-grid'>
+                <div className='first-step-form__block--column'>
+                    <h3 className='text'>Contact Information</h3>
+                    <div className='first-step-form__block-grid'>
                         <TextInput
                             name='lastName'
                             label='Your Last Name' 
@@ -113,7 +113,7 @@ export const FirstStepForm = () => {
                             max={6} />
                     </div>
                 </div>
-                <Button name='Continue'/>
+                <Button className='button--right-aligned' name='Continue'/>
             </form>
         </FormProvider>
     )

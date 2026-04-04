@@ -1,11 +1,11 @@
 import { InputWrapper } from "./InputWrapper.tsx"
 import { useFormContext, type FieldValues, type Path } from "react-hook-form";
 
-const Type = {
+const InputType = {
     TEXT: 'text',
     DATE: 'date'
 } as const;
-type Type = typeof Type[keyof typeof Type];
+type InputType = typeof InputType[keyof typeof InputType];
 
 type InputProps<T extends FieldValues> = {
     name: Path<T>;
@@ -19,7 +19,7 @@ type InputProps<T extends FieldValues> = {
 
 type BaseInputProps<T extends FieldValues> = InputProps<T> & {
     pattern?: RegExp;
-    type: Type;
+    type: InputType;
 }
 
 const BaseInput = <T extends FieldValues>( {name, label, placeholder, isRequired, min, max, validate, pattern, type }: BaseInputProps<T>) => {
@@ -27,12 +27,12 @@ const BaseInput = <T extends FieldValues>( {name, label, placeholder, isRequired
     
     return (
         <InputWrapper required={isRequired} label={label} name={name}>
-        {type === Type.TEXT ? (
+        {type === InputType.TEXT ? (
             <input 
-                className="input__field"
+                className="input__field text"
                 id={name}
                 placeholder={placeholder}
-                type={Type.TEXT}
+                type={InputType.TEXT}
                 {...register(name, { 
                     required: isRequired,
                     pattern: pattern,
@@ -43,10 +43,10 @@ const BaseInput = <T extends FieldValues>( {name, label, placeholder, isRequired
             />
         ) : (
             <input 
-                className="input__field"
+                className="input__field text"
                 id={name}
                 placeholder={placeholder}
-                type={Type.DATE}
+                type={InputType.DATE}
                 {...register(name, { 
                     required: isRequired,
                     validate: validate ? (value) => validate(value) : undefined
@@ -61,7 +61,7 @@ export const TextInput = <T extends FieldValues>(props: InputProps<T>) => {
     return (
         <BaseInput {...props}
         pattern={/^[A-Za-z\s]+$/}
-        type={Type.TEXT} />    
+        type={InputType.TEXT} />    
     )
 }
 
@@ -69,7 +69,7 @@ export const NumericInput = <T extends FieldValues>(props: InputProps<T>) => {
     return (
         <BaseInput {...props}
         pattern={/^\d+$/}
-        type={Type.TEXT} />    
+        type={InputType.TEXT} />    
     )
 }
 
@@ -77,13 +77,13 @@ export const EmailInput = <T extends FieldValues>(props: InputProps<T>) => {
     return (
         <BaseInput {...props}
         pattern={/^\S+@\S+$/i}
-        type={Type.TEXT} />    
+        type={InputType.TEXT} />    
     )
 }
 
 export const DateInput = <T extends FieldValues>(props: InputProps<T>) => {
     return (
         <BaseInput {...props}
-        type={Type.DATE} />    
+        type={InputType.DATE} />    
     )
 }
