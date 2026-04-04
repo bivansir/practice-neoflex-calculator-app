@@ -1,5 +1,5 @@
 import './how-to-banner.css';
-import type { InfoElement } from "../../shared/Types"
+import type { InfoElement } from "@/shared/Types"
 
 
 export const HowToBanner = () => {

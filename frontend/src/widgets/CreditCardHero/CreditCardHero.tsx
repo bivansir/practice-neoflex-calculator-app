@@ -1,6 +1,6 @@
-import { Button } from "../../shared/Button/Button";
+import { Button } from "@/shared/Button/Button";
 import './CreditCardHero.css';
-import type { InfoElement } from "../../shared/Types"
+import type { InfoElement } from "@/shared/Types"
 
 
 export const CreditCardHero = () => {

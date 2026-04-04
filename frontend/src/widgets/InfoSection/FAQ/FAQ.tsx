@@ -1,5 +1,5 @@
-import { DropdownElement } from "../../../shared/DropdownElement/DropdownElement"
-import type { InfoElement } from "../../../shared/Types"
+import { DropdownElement } from "@/shared/DropdownElement/DropdownElement"
+import type { InfoElement } from "@/shared/Types"
 import './faq.css'
 
 export const FAQ = () => {

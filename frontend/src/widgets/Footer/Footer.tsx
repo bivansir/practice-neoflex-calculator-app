@@ -1,5 +1,5 @@
 import './footer.css'
-import type { NavLink } from "../../shared/Types"
+import type { NavLink } from "@/shared/Types"
 export const Footer = () => {
 
     const navLinks: NavLink[] = [

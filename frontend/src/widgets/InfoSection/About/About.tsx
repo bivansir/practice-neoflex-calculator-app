@@ -1,5 +1,5 @@
 import './about.css';
-import type { InfoElement } from "../../../shared/Types"
+import type { InfoElement } from "@/shared/Types"
 
 type AboutItem = InfoElement & {
         icon_path: string;

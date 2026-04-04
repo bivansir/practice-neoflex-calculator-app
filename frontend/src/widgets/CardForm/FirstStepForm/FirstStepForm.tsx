@@ -1,9 +1,8 @@
-import { useState } from "react"
 import { SliderElement } from "./SliderElement"
 import './first-step-form.css'
-import { TextInput, EmailInput, DateInput, NumericInput } from "../../../shared/Input/Input";
-import { SelectInput } from "../../../shared/Input/SelectInput";
-import { Button } from "../../../shared/Button/Button";
+import { TextInput, EmailInput, DateInput, NumericInput } from "@/shared/Input/Input";
+import { SelectInput } from "@/shared/Input/SelectInput";
+import { Button } from "@/shared/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
 
 type FormData = {
