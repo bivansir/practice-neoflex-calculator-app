@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { InfoSectionMenu } from "./InfoSectionMenu";
-import { AboutElement } from "./AboutElement";
-
+import { About } from "./About/About";
+import { Cashback } from "./Cashback/Cashback";
+import { FAQ } from "./FAQ/FAQ";
 import './InfoSection.css';
-import { CashbackSection } from "./CashbackSection/CashbackSection";
+import { RatesAndConditions } from "./RatesAndConditions/RatesAndConditions";
 
 export const InfoSection = () => {
-    const [activeId, setActiveId] = useState('About card');
+    const [activeId, setActiveId] = useState(1);
     return(
-        <div className='info-section'>
+        <section className='info-section'>
             <InfoSectionMenu activeId={activeId} setActiveId={setActiveId} />
-            <div className='line'></div>
-            {activeId === 'About card' && <AboutElement />}
-            {activeId === 'Cashback' && <CashbackSection />}
-        </div>
+            {activeId === 1 && <About />}
+            {activeId === 2 && <RatesAndConditions />}
+            {activeId === 3 && <Cashback />}
+            {activeId === 4 && <FAQ />}
+        </section>
     )
 }

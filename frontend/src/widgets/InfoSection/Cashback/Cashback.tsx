@@ -1,15 +1,9 @@
-import { useMemo } from 'react';
-import './cashback-section.css';
+import './cashback.css';
+import type { InfoElement } from "../../../shared/Types"
 
 
-type elementItem = {
-    id: number;
-    title: string;
-    description: string;
-}
-
-export const CashbackSection = () => {
-    const elementList = useMemo<elementItem[]>(() => [
+export const Cashback = () => {
+    const elementList: InfoElement[] = [
         {id: 1, title:'5%',
             description: 'For food delivery, cafes and restaurants',
         },
@@ -28,15 +22,15 @@ export const CashbackSection = () => {
         {id: 6, title:'30%',
             description: 'Purchases from our partners',
         }
-    ], [])
+    ];
 
 
     return (
-        <div className='cashback-section'>
+        <div className='cashback'>
             {elementList.map(item => (
-                <div key={item.id} className='cashback-section__item'>
-                    <p className='cashback-section__description'>{item.description}</p>
-                    <h2 className='cashback-section__title'>{item.title}</h2>
+                <div key={item.id} className='cashback__item surface--card'>
+                    <p className='cashback__description text text--comfortable'>{item.description}</p>
+                    <h2 className='cashback__title text text--comfortable'>{item.title}</h2>
                 </div>
             ))}
         </div>

@@ -1,6 +1,6 @@
 type InfoSectionMenuProps = {
-  activeId: string;
-  setActiveId: (id: string) => void;
+  activeId: number;
+  setActiveId: (id: number) => void;
 };
 
 export const InfoSectionMenu = ({ activeId, setActiveId }: InfoSectionMenuProps) => {
@@ -18,9 +18,9 @@ export const InfoSectionMenu = ({ activeId, setActiveId }: InfoSectionMenuProps)
                 {menuElements.map(element => (
                     <li key={element.id} className='info-section-menu__item'>
                         <button className={
-                            `info-section-menu__button${activeId === element.label ? ' info-section-menu__button--active' : ''}`
+                            `info-section-menu__button${activeId === element.id ? ' info-section-menu__button--active' : ''} text text--spaced`
                         }
-                         onClick={() => setActiveId(element.label)}>
+                         onClick={() => setActiveId(element.id)}>
                             {element.label}
                         </button>
                     </li>
