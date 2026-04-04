@@ -1,0 +1,48 @@
+footer {
+    background-color: #E7E7E7;
+    padding: 6rem 13.375rem;
+}
+
+.footer__company-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.footer__company-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer__company-number {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.footer__image {
+    width: 160px;
+}
+
+.footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 0.5rem;
+}
+
+.footer__nav {
+    padding-bottom: 1rem;
+    border-bottom: 2px solid white;
+}
+
+.footer__policy {
+    padding-top: 1rem;
+}
+
+.footer__link {
+    color: black;
+    font-weight: 500;
+    text-wrap: none;
+    
+}
