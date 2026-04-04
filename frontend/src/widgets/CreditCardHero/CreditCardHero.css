@@ -1,27 +1,22 @@
 .credit-card-hero {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 20px;
-    padding-top: 48px;
-    padding-bottom: 48px;
-    padding-left: 32px;
-    padding-right: 121px;
+    padding: 3rem 0 3rem;
     background: linear-gradient(180deg, #CBD5E0C7, #FEEBC8B2);
-    border-radius: 28.8px;
-    box-shadow: 0px 2px 4px #00000033,
-                0px 0px 8px #00000014;
 }
 
 .credit-card-hero__content {
     display: flex;
+    align-items: start;
     flex-direction: column;
+    gap: 2rem;
+    padding-left: 3rem;
 }
 
 .credit-card-hero__image-container {
         display: flex;
         align-items: center;
-        margin-left: 117px;
+        margin: 0 auto 0 auto;
+        padding: 0 3rem 0 3rem;
 }
 
 .credit-card-hero__image {
@@ -30,23 +25,24 @@
 
 .credit-card-hero__title {
     color: white;
+    margin-bottom: 1rem;
 }
 
 .credit-card-hero__subtitle-container {
     display: flex;
-    margin-top: 32px;
-    margin-bottom: 32px;
-    flex-direction: row;
-    align-items: center;
-    gap: 80px;
+    gap: 5rem;
 }
 
 .credit-card-hero__subtitle-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: auto;
+    gap: 0.5rem;
 }
 
-.credit-card-hero__description {
+.credit-card-hero__paragraph {
     margin-bottom: 3px;
+}
+
+.credit-card-hero__paragraph:last-child {
+    margin-bottom: 0;
 }
