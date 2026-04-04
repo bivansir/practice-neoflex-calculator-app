@@ -1,40 +1,40 @@
 import './how-to-banner.css';
+import type { InfoElement } from "../../shared/Types"
 
-type StepElement = {
-    step: number;
-    description: string;
-}
 
 export const HowToBanner = () => {
-    const elementList: StepElement[] = [
+    const stepList: InfoElement[] = [
         {
-            step: 1,
+            id: 1,
+            title: '1',
             description: 'Fill out an online application - you do not need to visit the bank'
         },
         {
-            step: 2,
+            id: 2,
+            title: '2',
             description: 'Find out the bank\'s decision immediately after filling out the application'
         },
         {
-            step: 3,
+            id: 3,
+            title: '3',
             description: 'The bank will deliver the card free of charge, wherever convenient, to your city'
         }
     ];
 
     return (
-        <div className = 'how-to-banner'>
-            <h2 className="how-to-banner__title">How to get a card</h2>
+        <section className = 'how-to-banner'>
+            <h2 className="how-to-banner__title text text--comfortable">How to get a card</h2>
             <ol className="how-to-banner__step-list">
-            {elementList.map((element) => (
-                    <li key={element.step} className="how-to-banner__step-list-item">
-                        <div className="how-to-banner__step-number-container">
-                            <p className="how-to-banner__step-number">{element.step}</p>
-                            <div className="how-to-banner__step-line"></div>
+            {stepList.map((item) => (
+                    <li key={item.id} className="how-to-banner__step-list-item">
+                        <div className="how-to-banner__step-number-wrapper">
+                            <p className="how-to-banner__step-number text text--comfortable">{item.title}</p>
+
                         </div>
-                            <p className="how-to-banner__step-description">{element.description}</p>
+                            <p className="how-to-banner__step-description text text--comfortable">{item.description}</p>
                     </li>
             ))}
             </ol>
-        </div>
+        </section>
     )
 }
