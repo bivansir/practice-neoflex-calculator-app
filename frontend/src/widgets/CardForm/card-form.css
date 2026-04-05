@@ -2,9 +2,4 @@
     display: flex;
     background-color: white;
     border-radius: 28px;
-    width: 100%;
-}
-.card-form__content {
-    padding: 32px;
-    flex: 1;
 }

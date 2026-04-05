@@ -3,3 +3,16 @@
     flex-direction: column;
     gap: 2rem;
 }
+
+@media (max-width: 1340px) {
+    .FAQ__title {
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .FAQ {
+        text-align: center;
+    }
+
+}

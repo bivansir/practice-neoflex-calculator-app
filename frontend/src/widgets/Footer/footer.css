@@ -46,3 +46,16 @@ footer {
     text-wrap: none;
     
 }
+
+@media (max-width: 950px) {
+  footer {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer__company-info {
+    display: flex;
+    flex-direction: column;
+  }
+}

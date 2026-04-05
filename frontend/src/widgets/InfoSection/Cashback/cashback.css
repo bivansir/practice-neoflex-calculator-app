@@ -23,3 +23,11 @@
     font-size: 2.25rem;
     margin-top: auto;
 }
+
+@media (max-width: 920px) {
+    .cashback {
+        gap: 1rem;
+        grid-template-columns: repeat(1, 1fr);
+        text-align: center;
+    }
+}

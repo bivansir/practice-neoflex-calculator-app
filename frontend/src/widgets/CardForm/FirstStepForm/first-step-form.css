@@ -24,7 +24,7 @@
 }
 
 .first-step-form__slider {
-    min-width: 500px;
+    width: 500px;
     padding-right: 3rem;
     border-right: 2px solid var(--line);
 }
@@ -52,5 +52,46 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
-    margin-top:
+}
+
+@media (max-width: 950px) {
+  .first-step-form__block-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .first-step-form__slider {
+    width: auto;
+  }
+
+  .first-step-form__block--row {
+    flex-direction: column;
+  }
+
+  .first-step-form__summary {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .first-step-form__slider {
+    border-right: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .first-step-form__block-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .first-step-form__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
 }

@@ -39,3 +39,25 @@
     margin-bottom: 1.5rem;
 }
 
+@media (max-width: 920px) {
+    .about__row:nth-child(1) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .about__row:nth-child(2) {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .about__item {
+        text-align: center;  
+    }
+
+    .about__row {
+        gap: 1rem;
+    }
+
+    .about {
+        gap: 1rem;
+    }
+}

@@ -66,7 +66,7 @@ export const FAQ = () => {
 
     return (
         <div className='FAQ'>
-            <h2 className='text text--comfortable'>Issuing and receiving card</h2>
+            <h2 className='FAQ__title text text--comfortable'>Issuing and receiving card</h2>
             <ul>
                 <li>
                     {IssuingAndRecievingItems.map(item => (
@@ -74,7 +74,7 @@ export const FAQ = () => {
                     ))}
                 </li>
             </ul>
-            <h2 className='text text--comfortable'>Using a credit card</h2>
+            <h2 className='FAQ__title text text--comfortable'>Using a credit card</h2>
             <ul>
                 <li>
                     {UsingACreditCardItems.map(item => (

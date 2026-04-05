@@ -20,7 +20,9 @@
 }
 
 .credit-card-hero__image {
-    height: 226px;
+    width: 380px;
+    max-width: 100%;
+    height: auto;
 }
 
 .credit-card-hero__title {
@@ -45,4 +47,26 @@
 
 .credit-card-hero__paragraph:last-child {
     margin-bottom: 0;
+}
+
+@media (max-width: 920px) {
+  .credit-card-hero__image {
+    padding-top: 20px;
+    }
+  .credit-card-hero {
+    flex-direction: column;
+    }
+
+.credit-card-hero__content {
+    align-items: center;
+    padding: 0;
+    text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+  .credit-card-hero__subtitle-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
