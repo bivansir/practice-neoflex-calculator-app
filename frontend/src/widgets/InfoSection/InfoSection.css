@@ -1,0 +1,33 @@
+.info-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-section-menu__list {
+    display: flex;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid #80808033;
+}
+
+.info-section-menu__button {
+    position: relative;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--info-section-text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 1rem 0.5rem 1rem;
+}
+
+.info-section-menu__button--active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;          
+    left: 0;
+    width: 100%;         
+    height: 2px;        
+    background-color: var(--info-section-text-secondary);
+}
+
+

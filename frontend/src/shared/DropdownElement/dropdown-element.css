@@ -1,0 +1,21 @@
+.DropdownElement {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border: 1px solid #E2E8F0;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+.DropdownElement__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.DropdownElement__content {
+    line-height: 147%;
+    letter-spacing: -2%;
+    font-weight: 400;
+    color: var(--info-section-text-secondary);
+}

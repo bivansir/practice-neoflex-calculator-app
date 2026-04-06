@@ -41,6 +41,17 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'warn',
 
       'no-console': 'warn',
+
+      'max-len': ['error', {
+        code: 80,
+        tabWidth: 2,
+        ignoreUrls: true,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: false,
+        ignoreTemplateLiterals: false,
+        ignoreTrailingComments: false,
+      }]
     },
   },
 ])

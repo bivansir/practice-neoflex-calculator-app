@@ -1,0 +1,62 @@
+.how-to-banner {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.how-to-banner__step-list {
+    padding: 0;
+    display: flex;
+    gap: 6.875rem;
+    list-style-type: none;
+}
+
+.how-to-banner__step-list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.how-to-banner__step-number-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.how-to-banner__step-number {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    background-color: #D9D9D9;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.how-to-banner__step-number-wrapper:after {
+  content: '';
+  height: 2px;
+  flex-grow: 1;
+  margin-left: 36px;
+  background-color: #D9D9D9;
+}
+
+@media (max-width: 1340px) {
+    .how-to-banner {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .how-to-banner__step-list {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .how-to-banner__step-list {
+        flex-direction: column;
+    }
+}
