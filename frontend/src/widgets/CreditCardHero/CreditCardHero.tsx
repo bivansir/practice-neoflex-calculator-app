@@ -2,26 +2,26 @@ import { Button } from "@/shared/Button/Button";
 import './CreditCardHero.css';
 import type { InfoElement } from "@/shared/Types"
 
+const subtitleContent: InfoElement[] = [
+    {
+        id: 1,
+        title: "Up to 160 days",
+        description: "No percent"
+    },
+    {
+        id: 2,
+        title: "Up to 600 000 ₽",
+        description: "Credit limit"
+    },
+    {
+        id: 3,
+        title: "0 ₽",
+         description: "Card service is free"
+    }
+
+];
 
 export const CreditCardHero = () => {
-    const subtitleContent: InfoElement[] = [
-        {
-            id: 1,
-            title: "Up to 160 days",
-            description: "No percent"
-        },
-        {
-            id: 2,
-            title: "Up to 600 000 ₽",
-            description: "Credit limit"
-        },
-        {
-            id: 3,
-            title: "0 ₽",
-            description: "Card service is free"
-        }
-
-    ];
 
     return (
         <section className="credit-card-hero surface--card">

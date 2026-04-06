@@ -2,25 +2,25 @@ import './how-to-banner.css';
 import type { InfoElement } from "@/shared/Types"
 
 
-export const HowToBanner = () => {
-    const stepList: InfoElement[] = [
-        {
-            id: 1,
-            title: '1',
-            description: 'Fill out an online application - you do not need to visit the bank'
-        },
-        {
-            id: 2,
-            title: '2',
-            description: 'Find out the bank\'s decision immediately after filling out the application'
-        },
-        {
-            id: 3,
-            title: '3',
-            description: 'The bank will deliver the card free of charge, wherever convenient, to your city'
-        }
-    ];
+const stepList: InfoElement[] = [
+    {
+        id: 1,
+        title: '1',
+        description: 'Fill out an online application - you do not need to visit the bank'
+    },
+    {
+        id: 2,
+        title: '2',
+        description: 'Find out the bank\'s decision immediately after filling out the application'
+    },
+    {
+        id: 3,
+        title: '3',
+        description: 'The bank will deliver the card free of charge, wherever convenient, to your city'
+    }
+];
 
+export const HowToBanner = () => {
     return (
         <section className = 'how-to-banner'>
             <h2 className="how-to-banner__title text text--comfortable">How to get a card</h2>

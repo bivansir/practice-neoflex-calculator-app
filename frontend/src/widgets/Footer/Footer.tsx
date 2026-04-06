@@ -1,19 +1,21 @@
 import './footer.css'
 import type { NavLink } from "@/shared/Types"
+
+const navLinks: NavLink[] = [
+    { id: 1, label: 'About bank', path: '/placeholder' },
+    { id: 2, label: 'Ask a question', path: '/placeholder' },
+    { id: 3, label: 'Quality of service', path: '/placeholder' },
+    { id: 4, label: 'Requisites', path: '/placeholder' },
+    { id: 5, label: 'Press center', path: '/placeholder' },
+    { id: 6, label: 'Bank career', path: '/placeholder' },
+    { id: 7, label: 'Investors', path: '/placeholder' },
+    { id: 8, label: 'Analytics', path: '/placeholder' },
+    { id: 9, label: 'Business and processes', path: '/placeholder' },
+    { id: 10, label: 'Compliance and business ethics', path: '/placeholder' }
+  ];
+
 export const Footer = () => {
 
-    const navLinks: NavLink[] = [
-    { id: 1, label: 'About bank', path: '/loan' },
-    { id: 2, label: 'Ask a question', path: '/credit' },
-    { id: 3, label: 'Quality of service', path: '/account' },
-    { id: 4, label: 'Requisites', path: '/resources' },
-    { id: 5, label: 'Press center', path: '/resources' },
-    { id: 6, label: 'Bank career', path: '/resources' },
-    { id: 7, label: 'Investors', path: '/resources' },
-    { id: 8, label: 'Analytics', path: '/resources' },
-    { id: 9, label: 'Business and processes', path: '/resources' },
-    { id: 10, label: 'Compliance and business ethics', path: '/resources' }
-  ];
 
     return (
         <footer>

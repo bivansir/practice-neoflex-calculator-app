@@ -1,11 +1,10 @@
 import { InputWrapper } from "./InputWrapper.tsx"
 import { useFormContext, type FieldValues, type Path } from "react-hook-form";
 
-const InputType = {
-    TEXT: 'text',
-    DATE: 'date'
-} as const;
-type InputType = typeof InputType[keyof typeof InputType];
+enum InputType {
+    TEXT,
+    DATE
+}
 
 type InputProps<T extends FieldValues> = {
     name: Path<T>;

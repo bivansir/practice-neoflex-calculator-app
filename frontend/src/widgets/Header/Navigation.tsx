@@ -11,16 +11,16 @@ type NavigationProps = {
     isMobile: boolean
 }
 
+const navLinks: NavLink[] = [
+  { id: 1, label: 'Credit card', path: '/loan' },
+  { id: 2, label: 'Product', path: '/credit' },
+  { id: 3, label: 'Account', path: '/account' },
+  { id: 4, label: 'Resources', path: '/resources' }
+];
+
 export const Navigation = ( { isMobile } : NavigationProps) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const navLinks: NavLink[] = [
-    { id: 1, label: 'Credit card', path: '/loan' },
-    { id: 2, label: 'Product', path: '/credit' },
-    { id: 3, label: 'Account', path: '/account' },
-    { id: 4, label: 'Resources', path: '/resources' }
-  ];
 
     const renderNavLinks = () => (
     navLinks.map(link => (

@@ -3,15 +3,14 @@ type InfoSectionMenuProps = {
   setActiveId: (id: number) => void;
 };
 
-export const InfoSectionMenu = ({ activeId, setActiveId }: InfoSectionMenuProps) => {
-
-    const menuElements = [
+const menuElements = [
     { id: 1, label: 'About card'},
     { id: 2, label: 'Rates and conditions'},
     { id: 3, label: 'Cashback'},
     { id: 4, label: 'FAQ'}
-  ];
-  
+];
+
+export const InfoSectionMenu = ({ activeId, setActiveId }: InfoSectionMenuProps) => {  
     return(
         <div className="info-section-menu">
             <ul className="info-section-menu__list">

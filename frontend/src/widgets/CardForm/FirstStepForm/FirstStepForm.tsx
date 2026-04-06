@@ -1,4 +1,4 @@
-import { SliderElement } from "./SliderElement"
+import { SliderElement } from "@/shared/Slider/SliderElement"
 import './first-step-form.css'
 import { TextInput, EmailInput, DateInput, NumericInput } from "@/shared/Input/Input";
 import { SelectInput } from "@/shared/Input/SelectInput";
@@ -18,11 +18,7 @@ type FormData = {
 
 }
 
-export const FirstStepForm = () => {
-    const methods = useForm<FormData>()
-    const amount = methods.watch("amount");
-
-    const options = [
+const options = [
         { value: 1, label: '6 months' },
         { value: 9, label: '9 months' },
         { value: 12, label: '1 year' },
@@ -39,6 +35,10 @@ export const FirstStepForm = () => {
         { value: 300, label: '25 years' },
         { value: 360, label: '30 years' }
     ];
+
+export const FirstStepForm = () => {
+    const methods = useForm<FormData>()
+    const amount = methods.watch("amount");
 
     return (
         <FormProvider {...methods}>
