@@ -1,15 +1,10 @@
-.info-section {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-section-menu__list {
+.tabs__list {
     display: flex;
     margin-bottom: 3rem;
     border-bottom: 2px solid #80808033;
 }
 
-.info-section-menu__button {
+.tabs__button {
     position: relative;
     border: none;
     cursor: pointer;
@@ -20,7 +15,7 @@
     padding: 0 1rem 0.5rem 1rem;
 }
 
-.info-section-menu__button--active::after {
+.tabs__button--active::after {
     content: '';
     position: absolute;
     bottom: -2px;          
@@ -29,5 +24,3 @@
     height: 2px;        
     background-color: var(--info-section-text-secondary);
 }
-
-
