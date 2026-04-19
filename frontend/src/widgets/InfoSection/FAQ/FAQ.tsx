@@ -1,8 +1,7 @@
-import { DropdownElement } from "@/shared/DropdownElement/DropdownElement"
-import type { InfoElement } from "@/shared/Types"
+import { Accordion, type AccordionItem } from "@/shared/Accordion/Accordion"
 import './faq.css'
 
-const IssuingAndRecievingItems: InfoElement[] = [
+const IssuingAndRecievingItems: AccordionItem[] = [
     {
         id: 1,
         title: 'How to get a card?',
@@ -37,7 +36,7 @@ const IssuingAndRecievingItems: InfoElement[] = [
     }
 ];
 
-    const UsingACreditCardItems: InfoElement[] = [
+    const UsingACreditCardItems: AccordionItem[] = [
     {
         id: 1,
         title: 'What is an interest free credit card?',
@@ -77,21 +76,9 @@ export const FAQ = () => {
     return (
         <div className='FAQ'>
             <h2 className='FAQ__title text text--comfortable'>Issuing and receiving card</h2>
-            <ul>
-                <li>
-                    {IssuingAndRecievingItems.map(item => (
-                        <DropdownElement key={item.id} title={item.title} description={item.description} />
-                    ))}
-                </li>
-            </ul>
+            <Accordion items={IssuingAndRecievingItems} />
             <h2 className='FAQ__title text text--comfortable'>Using a credit card</h2>
-            <ul>
-                <li>
-                    {UsingACreditCardItems.map(item => (
-                        <DropdownElement key={item.id} title={item.title} description={item.description} />
-                    ))}
-                </li>
-            </ul>
+            <Accordion items={UsingACreditCardItems} />
         </div>
 
     )
