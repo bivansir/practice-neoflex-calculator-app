@@ -4,6 +4,7 @@ import { TextInput, EmailInput, DateInput, NumericInput } from "@/shared/Input/I
 import { SelectInput } from "@/shared/Input/SelectInput";
 import { Button } from "@/shared/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
+import { BorderStyle, Divider, Orientation } from "@/shared/Divider/Divider";
 
 type FormData = {
     firstName: string;
@@ -58,6 +59,10 @@ export const FirstStepForm = () => {
                             max={600000}
                             step={1000}/>
                     </div>
+                    <Divider
+                     orientation={Orientation.Vertical}
+                     borderStyle={BorderStyle.Dashed}>
+                    </Divider>
                     <div className='first-step-form__summary'>
                         <h3 className='text text--spaced'>You have chosen the amount</h3>
                         <p className='first-step-form__amount text text--spaced'>{amount}</p>
