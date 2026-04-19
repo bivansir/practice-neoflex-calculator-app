@@ -2,7 +2,7 @@ import { useState } from "react";
 import './Tabs.css';
 
 
-type TabItem = {
+export type TabItem = {
     id: number,
     label: string,
     content: React.ReactNode;
