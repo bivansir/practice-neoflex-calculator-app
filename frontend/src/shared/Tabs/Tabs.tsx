@@ -14,7 +14,7 @@ type TabsProps = {
 }
 
 export const Tabs = ( { items, defaultActiveId }: TabsProps ) => {
-    const [activeId, setActiveId] = useState<number>(() => {
+    const [activeId, setActiveId] = useState<number | undefined>(() => {
         if (defaultActiveId && items.some(item => item.id === defaultActiveId)) {
             return defaultActiveId;
         }
