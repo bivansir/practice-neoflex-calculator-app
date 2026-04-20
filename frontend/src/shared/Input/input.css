@@ -1,27 +1,66 @@
 .input {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
 }
 
 .input__label {
     line-height: 100%;
     letter-spacing: 0;
     font-weight: 500;
-}
-
-.input__field {
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: 4px; 
-    padding: 0.5rem 0.875rem;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
 }
 
 .input--required .input__label::after {
     content: '*';
-    color: #FF0000;
+    color: var(--attention);
     margin-left: 5px;
+}
+
+.input__field {
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 2px solid var(--input-border);
+    border-radius: 4px; 
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input__field:focus {
+    border-color: var(--input-active);
+}
+
+.input__field--error {
+    border-color: var(--error);
+}
+
+.input__field--error ~ .input__field-icon,
+.input__field--valid ~ .input__field-icon {
+    visibility: visible;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.input__field-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    visibility: hidden;
+}
+
+.input__field-wrapper {
+    position: relative;
+    margin-bottom: 0.25rem;
+}
+
+.input__error {
+    font-size: 1rem; font-weight: 500;
+    color: var(--error)
 }
 
