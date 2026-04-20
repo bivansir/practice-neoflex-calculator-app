@@ -1,5 +1,5 @@
 import { InputWrapper } from "./InputWrapper.tsx"
-import { useFormContext, type FieldValues, type Path, type PathValue } from "react-hook-form";
+import { useFormContext, type FieldValues, type Path } from "react-hook-form";
 
 enum InputType {
     TEXT,

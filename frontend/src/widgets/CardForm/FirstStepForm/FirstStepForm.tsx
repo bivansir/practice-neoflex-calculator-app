@@ -3,7 +3,7 @@ import './first-step-form.css'
 import { TextInput, EmailInput, DateInput, NumericInput} from "@/shared/Input/Input";
 import { SelectInput } from "@/shared/Input/SelectInput";
 import { Button } from "@/shared/Button/Button";
-import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { BorderStyle, Divider, Orientation } from "@/shared/Divider/Divider";
 import { validateAge, validateLength } from "@/shared/Input/validators";
 import { AmountInput } from "@/widgets/CardForm/FirstStepForm/AmountInput/AmountInput";
