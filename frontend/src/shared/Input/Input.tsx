@@ -22,10 +22,10 @@ type BaseInputProps<T extends FieldValues> = InputProps<T> & {
 }
 
 const BaseInput = <T extends FieldValues>( {name, label, placeholder, isRequired, min, max, validate, type, pattern}: BaseInputProps<T>) => {
-    const { register, formState: { errors, touchedFields } } = useFormContext();
+    const { register, formState: { errors, dirtyFields } } = useFormContext();
 
     const hasError = !!errors[name];
-    const isTouched = touchedFields[name];
+    const isDirty = dirtyFields[name];
 
     const registration = register(name, {
         required: isRequired ? `${label} is required` : false,
@@ -39,8 +39,8 @@ const BaseInput = <T extends FieldValues>( {name, label, placeholder, isRequired
         <InputWrapper required={isRequired} label={label} name={name}>
             <div className='input__field-wrapper'>
                 <input className={`input__field text${
-                    isTouched && hasError ? ' input__field--error' :
-                    isTouched && !hasError ? ' input__field--valid' : ''
+                    isDirty && hasError ? ' input__field--error' :
+                    isDirty && !hasError ? ' input__field--valid' : ''
                 }`}
                     id={name}
                     placeholder={placeholder}
