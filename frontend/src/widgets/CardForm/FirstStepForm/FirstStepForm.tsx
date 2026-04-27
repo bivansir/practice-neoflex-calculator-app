@@ -28,8 +28,10 @@ const options = [
         { value: 24, label: '1,5 years' }
     ];
 
+const amountMin = 15000, amountMax = 600000;
+
 export const FirstStepForm = () => {
-    const methods = useForm<FormData>({ mode: "onBlur"})
+    const methods = useForm<FormData>({ mode: "onChange"})
     const amount = methods.watch("amount");
 
     return (
@@ -46,8 +48,8 @@ export const FirstStepForm = () => {
                         <SliderElement
                             name='amount'
                             title="Select amount"
-                            min={15000}
-                            max={600000}
+                            min={amountMin}
+                            max={amountMax}
                             step={1000}/>
                     </div>
                     <Divider
@@ -59,8 +61,8 @@ export const FirstStepForm = () => {
                         <AmountInput
                             name="amount"
                             label=""
-                            min={15000}
-                            max={600000} />
+                            min={amountMin}
+                            max={amountMax} />
                     </div>
                 </div>
                 <div className='first-step-form__block--column'>
