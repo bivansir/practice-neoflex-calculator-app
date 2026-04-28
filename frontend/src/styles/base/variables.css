@@ -12,6 +12,7 @@
   --button-text: #FFFFFF;
   --button-hover: #7796C0;
 
+  --input-active: #5B35D5;
   --input-bg: #F9F5E3;
   --input-border: #80808033;
   --input-placeholder: #808080;
@@ -19,4 +20,8 @@
 
   --line: #80808033;
   --info-section-text-secondary: #7B7454;
+
+  --error: #FF5631;
+  --attention: #FF0000;
+  --success: 
 }

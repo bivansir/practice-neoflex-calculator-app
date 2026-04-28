@@ -26,7 +26,6 @@
 .first-step-form__slider {
     width: 500px;
     padding-right: 3rem;
-    border-right: 2px solid var(--line);
 }
 
 .first-step-form__summary {
@@ -45,6 +44,7 @@
 }
 
 .first-step-form__amount {
+    margin-top: 1rem;
     position: relative;
 }
 
@@ -52,6 +52,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+    margin-top: 1rem;
 }
 
 @media (max-width: 950px) {

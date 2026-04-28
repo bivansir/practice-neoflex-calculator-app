@@ -1,4 +1,4 @@
-import { useFormContext, type FieldValues, type Path } from "react-hook-form";
+import { useFormContext, type FieldValues, type Path, get } from "react-hook-form";
 import './input.css'
 
 type InputWrapperProps<T extends FieldValues> = {
@@ -11,7 +11,7 @@ type InputWrapperProps<T extends FieldValues> = {
 
 export const InputWrapper = <T extends FieldValues>({ label, required, children, name }: InputWrapperProps<T>) => {
     const { formState: { errors } } = useFormContext();
-    const error = errors[name]?.message as string;
+    const error = get(errors, name)?.message as string;
     
     return (
         <div className={`input${required ? ' input--required' : ''}`}>

@@ -1,19 +1,27 @@
-.DropdownElement {
+.accordion__item {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     border: 1px solid #E2E8F0;
-    padding: 2rem;
+
     cursor: pointer;
 }
 
-.DropdownElement__header {
+.accordion__item details {
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.accordion__item details[open] .accordion__header {
+    margin-bottom: 2rem;
+}
+
+.accordion__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.DropdownElement__content {
+.accordion__content {
     line-height: 147%;
     letter-spacing: -2%;
     font-weight: 400;

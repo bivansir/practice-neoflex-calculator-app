@@ -1,3 +1,4 @@
+import { BorderStyle, Divider, Orientation } from '@/shared/Divider/Divider';
 import './footer.css'
 import type { NavLink } from "@/shared/Types"
 
@@ -39,6 +40,7 @@ export const Footer = () => {
 
                 </ul>
             </nav>
+            <Divider orientation={Orientation.Horizontal} borderStyle={BorderStyle.Solid} color='white' ></Divider>
             <p className='footer__policy text text--comfortable text--spaced'>We use cookies to personalize our services and improve the user experience of our website.
                 Cookies are small files containing information about previous visits to a website. 
                 If you do not want to use cookies, please change your browser settings</p>

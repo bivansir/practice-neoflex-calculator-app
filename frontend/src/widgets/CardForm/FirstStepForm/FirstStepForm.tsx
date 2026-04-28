@@ -1,9 +1,12 @@
 import { SliderElement } from "@/shared/Slider/SliderElement"
 import './first-step-form.css'
-import { TextInput, EmailInput, DateInput, NumericInput } from "@/shared/Input/Input";
+import { TextInput, EmailInput, DateInput, NumericInput} from "@/shared/Input/Input";
 import { SelectInput } from "@/shared/Input/SelectInput";
 import { Button } from "@/shared/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
+import { BorderStyle, Divider, Orientation } from "@/shared/Divider/Divider";
+import { validateAge, validateLength } from "@/shared/Input/validators";
+import { AmountInput } from "@/widgets/CardForm/FirstStepForm/AmountInput/AmountInput";
 
 type FormData = {
     firstName: string;
@@ -19,25 +22,16 @@ type FormData = {
 }
 
 const options = [
-        { value: 1, label: '6 months' },
-        { value: 9, label: '9 months' },
-        { value: 12, label: '1 year' },
-        { value: 18, label: '1,5 years' },
-        { value: 24, label: '2 years' },
-        { value: 36, label: '3 years' },
-        { value: 48, label: '4 years' },
-        { value: 60, label: '5 years' },
-        { value: 72, label: '6 years' },
-        { value: 84, label: '7 years' },
-        { value: 120, label: '10 years' },
-        { value: 180, label: '15 years' },
-        { value: 240, label: '20 years' },
-        { value: 300, label: '25 years' },
-        { value: 360, label: '30 years' }
+        { value: 6, label: '6 months' },
+        { value: 12, label: '9 months' },
+        { value: 18, label: '1 year' },
+        { value: 24, label: '1,5 years' }
     ];
 
+const amountMin = 15000, amountMax = 600000;
+
 export const FirstStepForm = () => {
-    const methods = useForm<FormData>()
+    const methods = useForm<FormData>({ mode: "onChange"})
     const amount = methods.watch("amount");
 
     return (
@@ -54,13 +48,21 @@ export const FirstStepForm = () => {
                         <SliderElement
                             name='amount'
                             title="Select amount"
-                            min={15000}
-                            max={600000}
+                            min={amountMin}
+                            max={amountMax}
                             step={1000}/>
                     </div>
+                    <Divider
+                     orientation={Orientation.Vertical}
+                     borderStyle={BorderStyle.Dashed}>
+                    </Divider>
                     <div className='first-step-form__summary'>
                         <h3 className='text text--spaced'>You have chosen the amount</h3>
-                        <p className='first-step-form__amount text text--spaced'>{amount}</p>
+                        <AmountInput
+                            name="amount"
+                            label=""
+                            min={amountMin}
+                            max={amountMax} />
                     </div>
                 </div>
                 <div className='first-step-form__block--column'>
@@ -95,24 +97,25 @@ export const FirstStepForm = () => {
                             name='birthdate'
                             label='Your date of birth' 
                             placeholder="Select date"
-                            isRequired={true} />
+                            isRequired={true} 
+                            validate={validateAge}/>
                         <NumericInput
                             name='passportSeries'
                             label='Your Passport Series' 
                             placeholder="0000"
                             isRequired={true}
-                            min={4}
-                            max={4} />
+                            validate={validateLength(4)} />
                         <NumericInput
                             name='passportNumber'
                             label='Your Passport Number' 
                             placeholder="000000"
                             isRequired={true}
-                            min={6}
-                            max={6} />
+                            validate={validateLength(6)} />
                     </div>
                 </div>
-                <Button className='button--right-aligned' name='Continue'/>
+                <Button className='button--right-aligned'
+                 name='Continue'
+                 type='submit'/>
             </form>
         </FormProvider>
     )
