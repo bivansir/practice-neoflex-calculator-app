@@ -1,5 +1,5 @@
 import { useFormContext, type FieldValues, type Path, type PathValue } from "react-hook-form";
-import { InputWrapper } from "@/shared/Input/InputWrapper";
+import { InputWrapper } from "@/shared/components/Input/InputWrapper";
 import './amount-input.css'
 import { useState } from "react";
 

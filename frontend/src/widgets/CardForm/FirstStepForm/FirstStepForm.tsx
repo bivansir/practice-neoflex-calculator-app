@@ -1,11 +1,11 @@
-import { SliderElement } from "@/shared/Slider/SliderElement"
+import { SliderElement } from "@/shared/components/Slider/SliderElement"
 import './first-step-form.css'
-import { TextInput, EmailInput, DateInput, NumericInput} from "@/shared/Input/Input";
-import { SelectInput } from "@/shared/Input/SelectInput";
-import { Button } from "@/shared/Button/Button";
+import { TextInput, EmailInput, DateInput, NumericInput} from "@/shared/components/Input/Input";
+import { SelectInput } from "@/shared/components/Input/SelectInput";
+import { Button } from "@/shared/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
-import { BorderStyle, Divider, Orientation } from "@/shared/Divider/Divider";
-import { validateAge, validateLength } from "@/shared/Input/validators";
+import { BorderStyle, Divider, Orientation } from "@/shared/components/Divider/Divider";
+import { validateAge, validateLength } from "@/shared/components/Input/validators";
 import { AmountInput } from "@/widgets/CardForm/FirstStepForm/AmountInput/AmountInput";
 
 type FormData = {

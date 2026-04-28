@@ -1,4 +1,4 @@
-import { Accordion, type AccordionItem } from "@/shared/Accordion/Accordion"
+import { Accordion, type AccordionItem } from "@/shared/components/Accordion/Accordion"
 import './faq.css'
 
 const IssuingAndRecievingItems: AccordionItem[] = [

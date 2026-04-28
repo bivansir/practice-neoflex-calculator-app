@@ -1,6 +1,6 @@
-import { Button } from "@/shared/Button/Button";
+import { Button } from "@/shared/components/Button/Button";
 import './CreditCardHero.css';
-import { Tooltip } from "@/shared/Tooltip/Tooltip";
+import { Tooltip } from "@/shared/components/Tooltip/Tooltip";
 import { useState } from "react";
 
 const subtitleContent = [

@@ -1,4 +1,4 @@
-import { BorderStyle, Divider, Orientation } from '@/shared/Divider/Divider';
+import { BorderStyle, Divider, Orientation } from '@/shared/components/Divider/Divider';
 import './footer.css'
 import type { NavLink } from "@/shared/Types"
 
