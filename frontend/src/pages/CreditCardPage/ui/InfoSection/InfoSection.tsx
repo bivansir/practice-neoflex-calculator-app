@@ -2,7 +2,7 @@ import { About } from "./About/About";
 import { Cashback } from "./Cashback/Cashback";
 import { FAQ } from "./FAQ/FAQ";
 import { RatesAndConditions } from "./RatesAndConditions/RatesAndConditions";
-import { Tabs, type TabItem } from "@/shared/components/Tabs/Tabs";
+import { Tabs, type TabItem } from "@/shared/ui/Tabs/Tabs";
 
 const tabItems: TabItem[] = [
     { id: 1, label: "About card", content: <About /> },

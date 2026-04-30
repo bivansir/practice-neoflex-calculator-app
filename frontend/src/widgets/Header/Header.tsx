@@ -1,4 +1,4 @@
-import { Button } from "../../shared/components/Button/Button";
+import { Button } from "../../shared/ui/Button/Button";
 import { Navigation } from "./Navigation";
 import './Header.css';
 import { useEffect, useState } from "react";
