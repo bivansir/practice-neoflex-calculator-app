@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Header } from '@/widgets/Header/Header'
 import { Footer } from '@/widgets/Footer/Footer'
-import { CreditCardPage } from '@/pages/CreditCardPage/ui/CreditCardPage'
+import { LoanPage } from '@/pages/LoanPage/ui/LoanPage'
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/creditcard" element={<CreditCardPage />} />
+        <Route path="/creditcard" element={<LoanPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
