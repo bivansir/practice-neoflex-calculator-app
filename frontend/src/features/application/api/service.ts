@@ -1,6 +1,6 @@
 import { type LoanOfferDTO, type LoanStatementRequestDTO } from "./dto";
-import { httpClient } from "./apiClient";
-import { DEAL } from "./endpoints";
+import { httpClient } from "@/shared/api/apiClient";
+import { DEAL } from "@/shared/api/endpoints";
 
 
 export const dealService = {
