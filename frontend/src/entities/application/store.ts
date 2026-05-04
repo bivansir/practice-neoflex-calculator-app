@@ -1,65 +1,65 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-import type { Draft, StepDataMap, FlowStep } from './types';
+import { type FlowStep, STEP_ORDER, type FirstStepForm, type SecondStepForm } from './types';
 
 interface ApplicationState {
     applicationId: string | null;
     step: FlowStep;
-    draft: Draft | null;
+
+    firstStepFormDraft: FirstStepForm | null;
+    secondStepFormDraft: SecondStepForm | null;
 }
 
 interface ApplicationActions {
-    completeFirstStep: () => void;
-    completeSelectStatement: () => void;
-    enterFlow: (applicationId: string) => void;
-    completeFlowStep: (step: FormStep) => void;
+    completeFirstStep: (applicationId: string) => void;
+    completeFlowStep: (step: FlowStep) => void;
 
-  saveDraft: <K extends FormStep>(step: K, data: StepDataMap[K]) => void;
-  reset: () => void;
+    saveFirstStepFormDraft: (data: FirstStepForm) => void;
+    saveSecondStepFormDraft: (data: SecondStepForm) => void;
+    reset: () => void;
 }
-
-type ApplicationStore = ApplicationState & ApplicationActions;
 
 const initialState: ApplicationState = {
     applicationId: null,
-    completedSteps: [],
-    draft: null,
+    step: 'firstStep',
+    firstStepFormDraft: null,
+    secondStepFormDraft: null
 };
 
-export const useApplicationStore = create<ApplicationStore>()(
-  persist(
-    (set) => ({
-      ...initialState,
+export const useApplicationStore = create<ApplicationState & ApplicationActions>()(
+    persist(
+        (set) => ({
+            ...initialState,
 
-      startApplication: (id) =>
-        set({
-          applicationId: id,
-          completedSteps: ['first'],
-          draft: null,
+            completeFirstStep: (applicationId) =>
+                set(() => {
+                    return { applicationId, step: 'secondStep', draft: null };
+                }),
+
+            completeFlowStep: (step: FlowStep) => set(() => {
+                let nextStep: FlowStep;
+
+                const currentIdx = STEP_ORDER.indexOf(step)
+                currentIdx === STEP_ORDER.length - 1
+                ? nextStep = STEP_ORDER[0] 
+                : nextStep = STEP_ORDER[currentIdx + 1]
+
+                return {step: nextStep, draft: null}
+              }),
+
+            saveFirstStepFormDraft: (data) => set({ firstStepFormDraft: data}),
+            saveSecondStepFormDraft: (data) => set({ secondStepFormDraft: data}),
+
+            reset: () => set({}),
         }),
-
-      saveDraft: (step, data) =>
-        set({ draft: { step, data } as Draft }),
-
-      completeStep: (step) =>
-        set((state) => ({
-          completedSteps: state.completedSteps.includes(step)
-            ? state.completedSteps
-            : [...state.completedSteps, step],
-          draft: null,
-        })),
-
-      reset: () => set(initialState),
-    }),
-    {
-      name: 'loan-application',
-      partialize: (state) => ({
-        applicationId: state.applicationId,
-        completedSteps: state.completedSteps,
-        draft: state.draft,
-      }),
-      version: 1,
-    },
-  ),
+        {
+            name: 'loan-application',
+            partialize: (s) => ({
+                step: s.step,
+                firstStepFormDraft: s.firstStepFormDraft,
+                secondStepFormDraft: s.secondStepFormDraft,
+            }),
+            version: 1,
+        },
+    ),
 );

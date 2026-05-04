@@ -22,18 +22,7 @@ export type SecondStepForm = {
     passportNumber: string;
 }
 
-export type StepDataMap = {
-    first: FirstStepForm;
-    second: SecondStepForm;
-}
-
-export type Draft = {
-    [K in FormStep]: { step: K; data: StepDataMap[K] }
-    }[FormStep];
-
-export type FormStep = keyof StepDataMap;
-
-export const STEP_ORDER = [
+export const STEP_ORDER= [
     'firstStep',
     'secondStep',
     'thirdStep',

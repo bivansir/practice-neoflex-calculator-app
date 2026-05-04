@@ -1,30 +1,29 @@
 import { useApplicationStore } from './store';
-import type { StepDataMap, StepKey } from './types';
+import type { FlowStep, FormStep, StepDataMap } from './types';
 
-export function useDraftFor<K extends StepKey>(
-  step: K,
-): StepDataMap[K] | undefined {
-  return useApplicationStore((s) =>
-    s.draft?.step === step ? (s.draft.data as StepDataMap[K]) : undefined,
-  );
-}
+export const useCurrentStep = () => useApplicationStore((s) => s.step);
 
-export function selectCurrentStep(): StepKey | null {
-  const completed = useApplicationStore.getState().completedSteps;
-  if (completed.length === 0) return 'first';
-  if (completed.length >= STEP_ORDER.length) return null;
-  return STEP_ORDER[completed.length];
-}
+export const useIsStepAccessible = (step: FlowStep) =>
+    useApplicationStore((s) => s.step === step);
 
-export function useCurrentStep(): StepKey | null {
-  return useApplicationStore((s) => {
-    if (s.completedSteps.length === 0) return 'first';
-    if (s.completedSteps.length >= STEP_ORDER.length) return null;
-    return STEP_ORDER[s.completedSteps.length];
-  });
-}
+export function useDraftFor<K extends FormStep>(step: K): StepDataMap[K] | undefined {
+    return useApplicationStore((s) =>
+      s.draft?.step === step ? (s.draft.data as StepDataMap[K]) : undefined,
+    );
+  }
+  
+export function useApplicationRedirect(): string | undefined {
+    return useApplicationStore((s) => {
+        const { step, applicationId } = s;
 
-export function useIsStepAccessible(step: StepKey): boolean {
-  const current = useCurrentStep();
-  return current === step;
+        if (step === 'preliminary') return '/loan';
+        if (step === 'done') return applicationId ? `/loan/${applicationId}/success` : '/loan';
+        if (!applicationId) return '/loan';
+
+      switch (step) {
+          case 'personal':  return `/loan/${applicationId}`;
+          case 'document':  return `/loan/${applicationId}/document`;
+          case 'sign':      return `/loan/${applicationId}/document/sign`;
+      }
+    });
 }
