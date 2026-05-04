@@ -6,6 +6,11 @@
     padding: 2rem;
 }
 
+.first-step-form__wrapper {
+    background: white;
+    border-radius: 28px;
+}
+
 .first-step-form__header {
     display: flex;
     align-items: center;
