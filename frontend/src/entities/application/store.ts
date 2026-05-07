@@ -50,7 +50,7 @@ export const useApplicationStore = create<ApplicationState & ApplicationActions>
             saveFirstStepFormDraft: (data) => set({ firstStepFormDraft: data}),
             saveSecondStepFormDraft: (data) => set({ secondStepFormDraft: data}),
 
-            reset: () => set({}),
+            reset: () => set({...initialState}),
         }),
         {
             name: 'loan-application',
