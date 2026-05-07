@@ -26,12 +26,12 @@ export const SelectInput = <T extends FieldValues>(
             <select
                 className="input__field"
                 id={name}
-                defaultValue={defaultValue}
+                defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
                 disabled={isDisabled}
                 {...registration}>
 
                 {placeholder && (
-                    <option value="" disabled hidden>
+                    <option value='' disabled hidden>
                         {placeholder}
                     </option>
                 )}
