@@ -19,6 +19,14 @@ button {
     background-color: var(--button-hover);
 }
 
+.button:disabled {
+    background-color: var(--button-hover);
+}
+
+.button--deny {
+    background-color: #D93737CC;
+}
+
 .button--right-aligned {
   margin-left: auto;
   align-self: flex-start;
