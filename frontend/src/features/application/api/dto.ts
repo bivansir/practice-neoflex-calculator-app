@@ -20,3 +20,17 @@ export interface LoanStatementRequestDTO {
     passportSeries: string;
     passportNumber: string;
 }
+
+export interface DossierDTO {
+    gender: string;
+    maritalStatus: string;
+    dependentsNumber: number;
+    passportIssueDate: Date;
+    divisionCode: number;
+    employmentStatus: string;
+    iNN: number;
+    salary: number;
+    position: string;
+    workExperienceTotal: number;
+    workExperienceCurrent: number
+}
