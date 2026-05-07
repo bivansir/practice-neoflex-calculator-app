@@ -1,0 +1,14 @@
+.final-message {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: normal;
+}
+
+.final-message__img {
+    max-width: 100%;
+    width: 150px;
+}
