@@ -10,6 +10,7 @@ import { AmountInput } from "./AmountInput/AmountInput";
 import type { LoanStatementRequestDTO } from "@/features/application/api/dto";
 import { useApplicationStore } from "@/entities/application/store";
 import { useDebouncedFormSave } from "@/shared/hooks/useDebouncedFormSave";
+import { FormHeader } from "@/shared/ui/FormHeader/FormHeader";
 
 type FirstStepFormProps = {
     onSubmit: (data: LoanStatementRequestDTO) => Promise<void>;
@@ -40,12 +41,9 @@ export const FirstStepForm = ( { onSubmit }:FirstStepFormProps ) => {
                 <form className='first-step-form' onSubmit={methods.handleSubmit(onSubmit)}>
                     <div className='first-step-form__block--row'>
                         <div className='first-step-form__slider'>
-                            <div className='first-step-form__header'>
-                                <h2 className='text text--spaced'>
-                                    Customize your card
-                                </h2>
-                                <p className='text text--spaced'>Step 1 of 5</p>
-                            </div>
+                            <FormHeader 
+                            title='Customize your card'
+                            step={1} />
                             <SliderElement
                                 name='amount'
                                 title="Select amount"

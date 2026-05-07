@@ -1,13 +1,12 @@
-import { SelectStatement } from "@/features/application/LoanFirstStep/SelectStatement/SelectStatement";
+import { SelectStatement } from "@/features/application/ui/LoanFirstStep/SelectStatement/SelectStatement";
 import { FirstStepForm } from "./FirstStepForm/FirstStepForm";
-import './loan-first-step.css'
 import { useState } from "react";
 import { dealService } from "@/features/application/api/service";
 import { type LoanOfferDTO, type LoanStatementRequestDTO } from "@/features/application/api/dto";
-import { Loader } from "@/shared/ui/Loader/Loader";
 import type { ErrorResponseDto } from "@/shared/api/apiClient";
 import { FirstStepMessage } from "./FirstStepMessage/FirstStepMessage";
 import { useApplicationStore } from "@/entities/application/store";
+import { FormShell } from "@/shared/ui/FormShell/FormShell";
 
 type Step = 'form' | 'select' | 'email';
 
@@ -32,8 +31,6 @@ export const LoanFirstStep = () => {
         } catch (error) {
             const apiError = error as ErrorResponseDto;
             setError(apiError.message);
-            // TODO: delete
-            setStep('select');
         } finally {
             setIsPending(false);
         };
@@ -49,22 +46,16 @@ export const LoanFirstStep = () => {
         } catch (error) {
             const apiError = error as ErrorResponseDto;
             setError(apiError.message);
-            // TODO: delete
-            setStep('email');
         } finally {
             setIsPending(false);
         }
     }
 
     return (
-        <section className='loan-first-step'>
-            <div className={isPending ? 'loan-first-step__content--blurred' : 'loan-first-step__content'}>
-                {error && <h2>{error}</h2>}
-                {step === 'form' && <FirstStepForm onSubmit={handleSubmitForm} />}
-                {step === 'select' && <SelectStatement offers={offers} onSelect={handleSelect} />}
-                {step === 'email' && <FirstStepMessage />}
-            </div>
-            {isPending && <Loader />}
-        </section>
+        <FormShell isPending={isPending} error={error}>
+            {step === 'form' && <FirstStepForm onSubmit={handleSubmitForm} />}
+            {step === 'select' && <SelectStatement offers={offers} onSelect={handleSelect} />}
+            {step === 'email' && <FirstStepMessage />}
+        </FormShell>
     )
 }
