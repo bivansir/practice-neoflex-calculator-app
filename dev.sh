@@ -8,7 +8,7 @@ echo "=== Сборка dealservice ==="
 cd deal && mvn clean install -DskipTests && cd ..
 
 echo "=== Запуск контейнеров ==="
-docker compose up --build
+docker compose up --build -d
 
 echo "=== Запуск фронта ==="
 cd frontend && npm run dev
