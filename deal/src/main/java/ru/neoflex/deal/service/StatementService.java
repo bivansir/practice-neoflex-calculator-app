@@ -69,6 +69,17 @@ public class StatementService {
         return saved;
     }
 
+    public Statement documentsCreatedStatement(UUID id) {
+        Statement statement = statementRepository.getReferenceById(id);
+
+        updateStatementStatus(statement, ApplicationStatus.DOCUMENTS_CREATED, ChangeType.AUTOMATIC);
+
+        Statement saved = statementRepository.save(statement);
+        log.debug("Statement обновлена в БД (docuemnt_created): {}",
+                saved);
+        return saved;
+    }
+
     private void updateStatementStatus(Statement statement, ApplicationStatus applicationStatus, ChangeType changeType) {
         statement.setApplicationStatus(applicationStatus);
 

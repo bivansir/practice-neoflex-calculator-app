@@ -4,5 +4,5 @@ public enum ApplicationStatus {
     PREAPPROVAL,
     APPROVED,
     CC_APPROVED,
-    DOCUMENT_CREATED
+    DOCUMENTS_CREATED
 }

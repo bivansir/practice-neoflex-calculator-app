@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.neoflex.deal.dto.ErrorResponseDto;
 import ru.neoflex.deal.exception.CalculatorServiceException;
+import ru.neoflex.deal.exception.KafkaSendException;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +65,20 @@ public class GlobalExceptionHandler {
                         .code("BAD_REQUEST")
                         .message("Ошибка чтения запроса")
                         .details(springMessage)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(KafkaSendException.class)
+    public ResponseEntity<ErrorResponseDto> handleKafkaSendException(KafkaSendException ex) {
+
+        log.error("KAFKA_SEND_ERROR: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ErrorResponseDto.builder()
+                        .code("KAFKA_SEND_ERROR")
+                        .message("Ошибка отправки сообщения в Kafka")
+                        .details(ex.getDetails())
                         .timestamp(LocalDateTime.now())
                         .build()
         );

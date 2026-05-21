@@ -12,6 +12,7 @@ import ru.neoflex.deal.dto.ErrorResponseDto;
 import ru.neoflex.deal.dto.LoanOfferDto;
 import ru.neoflex.deal.dto.LoanStatementRequestDto;
 import ru.neoflex.deal.exception.CalculatorServiceException;
+import ru.neoflex.deal.exception.KafkaSendException;
 import ru.neoflex.deal.service.DealService;
 import tools.jackson.databind.ObjectMapper;
 
@@ -188,6 +189,35 @@ public class DealControllerTest {
                 .andExpect(jsonPath("$.code").value("CALCULATOR_SERVICE_ERROR"))
                 .andExpect(jsonPath("$.message").value("Ошибка МС Калькулятор"))
                 .andExpect(jsonPath("$.details").exists())
+                .andExpect(jsonPath("$.timestamp").exists());
+    }
+
+    @Test
+    @SneakyThrows
+    void endpointKafkaExceptionTest() {
+        //given
+        doThrow(new KafkaSendException("Error", new RuntimeException()))
+                .when(dealService)
+                .select(any());
+
+        //when
+        mockMvc.perform(post("/deal/select")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(LoanOfferDto.builder()
+                                .statementId(UUID.randomUUID())
+                                .requestedAmount(BigDecimal.valueOf(124))
+                                .totalAmount(BigDecimal.valueOf(124))
+                                .term(12)
+                                .monthlyPayment(BigDecimal.valueOf(124))
+                                .rate(BigDecimal.valueOf(1))
+                                .isInsuranceEnabled(true)
+                                .isSalaryClient(true)
+                                .build())))
+                //then
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.code").value("KAFKA_SEND_ERROR"))
+                .andExpect(jsonPath("$.message").value("Ошибка отправки сообщения в Kafka"))
+                .andExpect(jsonPath("$.details").isEmpty())
                 .andExpect(jsonPath("$.timestamp").exists());
     }
 

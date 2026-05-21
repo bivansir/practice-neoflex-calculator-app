@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.neoflex.deal.dto.CreditDto;
-import ru.neoflex.deal.dto.LoanOfferDto;
-import ru.neoflex.deal.dto.LoanStatementRequestDto;
-import ru.neoflex.deal.dto.ScoringDataDto;
+import ru.neoflex.deal.dto.*;
 import ru.neoflex.deal.entity.Client;
 import ru.neoflex.deal.entity.Credit;
 import ru.neoflex.deal.entity.Statement;
+import ru.neoflex.deal.enums.Theme;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class DealService {
     private final StatementService statementService;
     private final CreditService creditService;
     private final CalculatorService calculatorService;
+    private final KafkaService kafkaService;
 
     @Transactional(rollbackFor = Exception.class)
     public List<LoanOfferDto> deal(LoanStatementRequestDto request) {
@@ -64,5 +64,12 @@ public class DealService {
 
         Credit credit = creditService.createCredit(response);
         statementService.ccApproveStatement(request.getStatementId(), credit);
+
+        kafkaService.sendEmailMessage(EmailMessage.builder()
+                .address(client.getEmail())
+                .theme(Theme.SEND_DOCUMENTS)
+                .statementId(statement.getStatementId())
+                .build());
+        statementService.documentsCreatedStatement(request.getStatementId());
     }
 }

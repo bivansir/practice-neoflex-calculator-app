@@ -150,4 +150,30 @@ public class StatementServiceIntegrationTest extends IntegrationTestBase {
         assertEquals(ChangeType.AUTOMATIC, statementStatusHistoryNewChange.getChangeType());
         assertNotNull(statementStatusHistoryNewChange.getTime());
     }
+
+    @Test
+    void shouldDocumentsCreated() {
+        // given
+        Statement statement = statementRepository.save(Statement.builder()
+                .client(createClient())
+                .applicationStatus(ApplicationStatus.CC_APPROVED)
+                .creationDate(LocalDateTime.now())
+                .sesCode("PLACEHOLDER")
+                .statusHistory(List.of(StatementStatusHistoryDto.builder().build()))
+                .build());
+
+        // when
+        Statement saved = statementService.documentsCreatedStatement(statement.getStatementId());
+
+        // then
+        assertEquals(ApplicationStatus.DOCUMENTS_CREATED, saved.getApplicationStatus());
+
+        List<StatementStatusHistoryDto> statementStatusHistoryDto = statement.getStatusHistory();
+        assertEquals(2, statementStatusHistoryDto.size());
+
+        StatementStatusHistoryDto statementStatusHistoryNewChange = statementStatusHistoryDto.get(1);
+        assertEquals(ApplicationStatus.DOCUMENTS_CREATED, statementStatusHistoryNewChange.getStatus());
+        assertEquals(ChangeType.MANUAL, statementStatusHistoryNewChange.getChangeType());
+        assertNotNull(statementStatusHistoryNewChange.getTime());
+    }
 }

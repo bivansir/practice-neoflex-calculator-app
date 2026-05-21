@@ -6,24 +6,23 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.neoflex.deal.dto.CreditDto;
-import ru.neoflex.deal.dto.LoanOfferDto;
-import ru.neoflex.deal.dto.LoanStatementRequestDto;
-import ru.neoflex.deal.dto.ScoringDataDto;
+import ru.neoflex.deal.dto.*;
 import ru.neoflex.deal.entity.Client;
 import ru.neoflex.deal.entity.Credit;
 import ru.neoflex.deal.entity.Passport;
 import ru.neoflex.deal.entity.Statement;
+import ru.neoflex.deal.exception.KafkaSendException;
 import ru.neoflex.deal.service.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -40,6 +39,9 @@ public class DealServiceTest {
 
     @Mock
     private CreditService creditService;
+
+    @Mock
+    private KafkaService kafkaService;
 
     @InjectMocks
     private DealService dealService;
@@ -77,7 +79,7 @@ public class DealServiceTest {
     }
 
     @Test
-    void shouldFormScoringDataDTO() {
+    void shouldFormScoringDataDTO_andSendMessage() {
         // given
         LoanOfferDto request = LoanOfferDto.builder()
                 .totalAmount(BigDecimal.valueOf(500000))
@@ -89,6 +91,7 @@ public class DealServiceTest {
         Client client = Client.builder()
                 .firstName("Илья")
                 .lastName("Илья")
+                .email("ilya@example.com")
                 .birthDate(LocalDate.now())
                 .passportId(Passport.builder()
                         .series("1234")
@@ -103,12 +106,13 @@ public class DealServiceTest {
         when(statementService.approveStatement(request)).thenReturn(statement);
         when(creditService.createCredit(any())).thenReturn(Credit.builder().build());
         when(calculatorService.calc(any())).thenReturn(CreditDto.builder().build());
-        when(statementService.ccApproveStatement(any(), any())).thenReturn(any());
+        when(statementService.ccApproveStatement(any(), any())).thenReturn(statement);
 
         // when
         dealService.select(request);
 
         // then
+
         ArgumentCaptor<ScoringDataDto> captor = ArgumentCaptor.forClass(ScoringDataDto.class);
         verify(calculatorService).calc(captor.capture());
 
@@ -123,5 +127,43 @@ public class DealServiceTest {
         assertEquals(client.getPassportId().getSeries(), created.getPassportSeries());
         assertEquals(request.getIsInsuranceEnabled(), created.getIsInsuranceEnabled());
         assertEquals(request.getIsSalaryClient(), created.getIsSalaryClient());
+
+        verify(kafkaService).sendEmailMessage(any(EmailMessage.class));
+    }
+
+    @Test
+    void select_shouldThrowAndNotUpdateStatus_whenKafkaFails() {
+        // given
+        LoanOfferDto request = LoanOfferDto.builder()
+                .totalAmount(BigDecimal.valueOf(500000))
+                .term(24)
+                .isInsuranceEnabled(true)
+                .isSalaryClient(true)
+                .build();
+
+        Client client = Client.builder()
+                .email("ilya@example.com")
+                .firstName("Илья")
+                .lastName("Илья")
+                .birthDate(LocalDate.now())
+                .passportId(Passport.builder().series("1234").number("567890").build())
+                .build();
+
+        Statement statement = Statement.builder().client(client).build();
+
+        when(statementService.approveStatement(request)).thenReturn(statement);
+        when(calculatorService.calc(any())).thenReturn(CreditDto.builder().build());
+        when(creditService.createCredit(any())).thenReturn(Credit.builder().build());
+        when(statementService.ccApproveStatement(any(), any())).thenReturn(statement);
+
+        doThrow(new KafkaSendException("Error", new RuntimeException()))
+                .when(kafkaService).sendEmailMessage(any(EmailMessage.class));
+
+        // when
+        assertThatThrownBy(() -> dealService.select(request))
+                // then
+                .isInstanceOf(KafkaSendException.class);
+
+        verify(statementService, never()).documentsCreatedStatement(any());
     }
 }
