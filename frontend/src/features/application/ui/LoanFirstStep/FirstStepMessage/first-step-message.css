@@ -1,0 +1,9 @@
+.first-step-message {
+    border: #5B35D5 solid 1px;
+    border-radius: 10px;
+}
+
+.first-step-message .email-banner {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
