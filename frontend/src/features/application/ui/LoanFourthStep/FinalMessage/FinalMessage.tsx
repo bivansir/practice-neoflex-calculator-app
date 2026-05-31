@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './final-message.css'
 import { useApplicationStore } from "@/entities/application/store";
 import { useEffect } from "react";
-
+import offerImg from '@/assets/images/offer.png'
 
 export const FinalMessage = () => {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const FinalMessage = () => {
     
     return (
         <div className="final-message">
-            <img className='final-message__img' src='/src/assets/images/offer.png'></img>
+            <img className='final-message__img' src={offerImg}></img>
             <h2>Congratulations! You have completed your new credit card.</h2>
             <p>Your credit card will arrive soon. Thank you for choosing us!</p>
             <Button name='View other offers of our bank' onClick={() => navigate('/loan')} />

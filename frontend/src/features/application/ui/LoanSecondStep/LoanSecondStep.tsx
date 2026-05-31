@@ -4,7 +4,6 @@ import { FormShell } from "@/shared/ui/FormShell/FormShell"
 import { useState } from "react";
 import { SecondStepForm } from "./SecondStepForm/SecondStepForm";
 import { EmailBanner } from "@/shared/ui/EmailBanner/EmailBanner";
-import type { DossierDTO } from "../../api/dto";
 import type { ErrorResponseDto } from "@/shared/api/apiClient";
 
 export const LoanSecondStep = () => {
@@ -14,7 +13,7 @@ export const LoanSecondStep = () => {
     const current = useCurrentStep();
     const completeSecondStep = useApplicationStore((s) => s.completeFlowStep);
 
-    const handleSubmitForm = async (data: DossierDTO) => {
+    const handleSubmitForm = async () => {
             setIsPending(true);
             setError(null);
             try {

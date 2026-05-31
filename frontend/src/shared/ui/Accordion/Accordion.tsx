@@ -1,6 +1,7 @@
 import { useState } from "react"
-import './Accordion.css'
-
+import './accordion.css'
+import expandUpIcon from '@/assets/icons/expand-up.svg'
+import expandDownIcon from '@/assets/icons/expand-down.svg'
 
 export type AccordionItem = {
     id: number,
@@ -27,8 +28,8 @@ export const Accordion = ({ items }: AccordionProps) => {
                     }}>
                         <summary className='accordion__header'>
                             <h4 className='text text--comfortable'>{item.title}</h4>
-                            <img src={activeId === item.id ? '/src/assets/icons/expand-up.svg'
-                                 : '/src/assets/icons/expand-down.svg'} alt={activeId === item.id ? 'Свернуть' : 'Развернуть'} />
+                            <img src={activeId === item.id ? expandUpIcon
+                                 : expandDownIcon} alt={activeId === item.id ? 'Свернуть' : 'Развернуть'} />
                     </summary>
                     <p className='accordion__content text text--comfortable'>{item.description}</p>
                 </details>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './Tabs.css';
+import './tabs.css';
 
 
 export type TabItem = {
