@@ -89,5 +89,13 @@ services:
     ports:
       - "8083:8081"
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    depends_on:
+      - dealservice
+    ports:
+      - "3000:80"
+
 volumes:
   db_data:
