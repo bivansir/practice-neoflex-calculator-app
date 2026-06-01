@@ -13,9 +13,15 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>deal</name>
     <description>deal</description>
+
     <properties>
         <java.version>17</java.version>
+        <springdoc.version>3.0.2</springdoc.version>
+        <hypersistence-utils.version>3.15.2</hypersistence-utils.version>
+        <jboss-logging.version>3.6.1.Final</jboss-logging.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
     </properties>
+
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
@@ -25,7 +31,28 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -40,17 +67,11 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>3.0.2</version>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- Database -->
@@ -68,14 +89,14 @@
         <dependency>
             <groupId>io.hypersistence</groupId>
             <artifactId>hypersistence-utils-hibernate-70</artifactId>
-            <version>3.15.2</version>
+            <version>${hypersistence-utils.version}</version>
         </dependency>
 
         <!-- Logging -->
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>3.6.1.Final</version>
+            <version>${jboss-logging.version}</version>
         </dependency>
 
         <!-- Lombok -->
@@ -89,30 +110,23 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.20.4</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>1.20.4</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.20.4</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Kafka -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-kafka</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

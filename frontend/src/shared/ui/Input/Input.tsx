@@ -1,5 +1,7 @@
 import { InputWrapper } from "./InputWrapper.tsx"
 import { useFormContext, type FieldValues, type Path } from "react-hook-form";
+import validIcon from '@/assets/icons/valid.svg'
+import errorIcon from '@/assets/icons/error.svg'
 
 enum InputType {
     TEXT,
@@ -50,7 +52,7 @@ const BaseInput = <T extends FieldValues>(
                     {...registration}
                 />
                 <img className='input__field-icon'
-                src={`/src/assets/icons/${hasError ? 'error.svg' : 'valid.svg'}`}></img>
+                src={hasError ? errorIcon : validIcon}></img>
             </div>
         </InputWrapper>
     );

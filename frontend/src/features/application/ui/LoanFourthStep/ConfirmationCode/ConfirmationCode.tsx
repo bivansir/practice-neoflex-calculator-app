@@ -115,6 +115,8 @@ export const ConfirmationCode = ({ onVerify }: ConfirmationCodeProps) => {
                 onVerify();
             }, 800);
 
+        return () => clearTimeout(t);
+
             
         }
     }, [status]);
