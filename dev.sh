@@ -5,5 +5,4 @@ echo "=== Запуск контейнеров ==="
 docker compose up --build -d
 
 echo "=== Запуск фронта ==="
-cd frontend && npm install
-cd frontend && npm run dev
+cd frontend && npm install && npm run dev
