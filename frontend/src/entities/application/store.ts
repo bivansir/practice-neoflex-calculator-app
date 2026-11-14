@@ -33,7 +33,9 @@ export const useApplicationStore = create<ApplicationState & ApplicationActions>
 
             completeFirstStep: (applicationId) =>
                 set(() => {
-                    return { applicationId, step: 'secondStep', draft: null };
+                    return { applicationId, step: 'secondStep',
+                    firstStepFormDraft: null,
+                    secondStepFormDraft: null, };
                 }),
 
             completeFlowStep: (step: FlowStep) => set(() => {
@@ -44,7 +46,8 @@ export const useApplicationStore = create<ApplicationState & ApplicationActions>
                 ? nextStep = STEP_ORDER[0] 
                 : nextStep = STEP_ORDER[currentIdx + 1]
 
-                return {step: nextStep, draft: null}
+                return {step: nextStep, firstStepFormDraft: null,
+                secondStepFormDraft: null,}
               }),
 
             saveFirstStepFormDraft: (data) => set({ firstStepFormDraft: data}),
@@ -55,6 +58,7 @@ export const useApplicationStore = create<ApplicationState & ApplicationActions>
         {
             name: 'loan-application',
             partialize: (s) => ({
+                applicationId: s.applicationId,
                 step: s.step,
                 firstStepFormDraft: s.firstStepFormDraft,
                 secondStepFormDraft: s.secondStepFormDraft,

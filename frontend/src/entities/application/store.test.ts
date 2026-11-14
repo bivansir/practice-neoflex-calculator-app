@@ -1,5 +1,6 @@
 // src/entities/application/store.test.ts
 import { useApplicationStore } from './store'
+import { FirstStepForm } from './types'
 
 beforeEach(() => {
   useApplicationStore.getState().reset()
@@ -59,4 +60,10 @@ describe('ApplicationStore', () => {
     expect(state.step).toBe('firstStep')
     expect(state.applicationId).toBeNull()
   })
+
+  it('completeFirstStep очищает черновики', () => {
+    useApplicationStore.getState().saveFirstStepFormDraft({ firstName: 'test' } as FirstStepForm)
+    useApplicationStore.getState().completeFirstStep('test')
+    expect(useApplicationStore.getState().firstStepFormDraft).toBeNull()
+})
 })
