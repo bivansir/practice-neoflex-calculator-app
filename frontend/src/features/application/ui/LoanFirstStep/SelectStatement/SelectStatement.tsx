@@ -1,6 +1,9 @@
 import { Button } from "@/shared/ui/Button/Button"
 import './select-statement.css'
 import type { LoanOfferDTO } from "@/features/application/api/dto"
+import offerImg from '@/assets/images/offer.png'
+import validIcon from '@/assets/icons/valid.svg'
+import errorIcon from '@/assets/icons/error.svg'
 
 type SelectStatementProps = {
     offers: LoanOfferDTO[]
@@ -12,9 +15,9 @@ export const SelectStatement = ( {onSelect, offers}: SelectStatementProps) => {
     return (
         <div className="select-statement">
             {offers.map((item) => (
-                <div key={item.id} className="statement surface--card">
+                <div key={item.statementID} className="statement surface--card">
                     <div className='statement__content'>
-                        <img className="statement__image" src='/src/assets/images/offer.png' />
+                        <img className="statement__image" src={offerImg} />
 
                         <dl className="statement__list">
                             <div className="statement__element">
@@ -45,13 +48,13 @@ export const SelectStatement = ( {onSelect, offers}: SelectStatementProps) => {
                             <div className="statement__element">
                                 <dt>Insurance included </dt> 
                                 <dd>
-                                    <img src={`/src/assets/icons/${item.isInsuranceEnabled ? 'valid.svg' : 'error.svg'}`} />
+                                    <img src={item.isInsuranceEnabled ? validIcon : errorIcon} />
                                 </dd>
                             </div>
                             <div className="statement__element">
                                 <dt>Salary client </dt> 
                                 <dd>
-                                    <img src={`/src/assets/icons/${item.isSalaryClient ? 'valid.svg' : 'error.svg'}`} />
+                                    <img src={item.isSalaryClient ? validIcon : errorIcon} />
                                 </dd>
                             </div>
                         </dl>

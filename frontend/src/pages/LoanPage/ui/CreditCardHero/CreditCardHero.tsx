@@ -2,6 +2,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import './CreditCardHero.css';
 import { Tooltip } from "@/shared/ui/Tooltip/Tooltip";
 import { useState } from "react";
+import creditCardImg from "@/assets/images/credit-card.png"
 
 const subtitleContent = [
     {
@@ -57,7 +58,7 @@ export const CreditCardHero = () => {
             </div>
 
             <div className="credit-card-hero__image-container">
-                <img src="/src/assets/images/credit-card.png"
+                <img src={creditCardImg}
                  alt="credit-card"
                  className="credit-card-hero__image"
                  onMouseEnter={() => setShowTooltips(true)}

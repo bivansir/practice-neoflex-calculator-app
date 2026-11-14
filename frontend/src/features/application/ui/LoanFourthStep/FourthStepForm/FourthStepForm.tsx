@@ -3,6 +3,7 @@ import { Button } from "@/shared/ui/Button/Button"
 import { Checkbox } from "@/shared/ui/Checkbox/Checkbox"
 import { useState } from "react"
 import './fourth-step-form.css'
+import fileIcon from '@/assets/icons/file.svg'
 
 type FourthStepFormProps = {
     onSubmit: () => void
@@ -30,7 +31,7 @@ export const FourthStepForm = ({ onSubmit }: FourthStepFormProps) => {
             </p>
             <div className='fourth-step-form__document-group'>
                 <a href='/your-document-placeholder'>
-                    <img src='/src/assets/icons/file.svg'></img>
+                    <img src={fileIcon}></img>
                 </a>
                 <h3 className='text text--tight'>Information on your card</h3>
             </div>

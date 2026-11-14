@@ -1,6 +1,7 @@
 import { Button } from '@/shared/ui/Button/Button'
 import './DenyModal.css'
-    
+import closeIcon from '@/assets/icons/close.svg'    
+
 type DenyModalProps = {
     deny: boolean,
     onDeny: () => void,
@@ -31,7 +32,7 @@ export const DenyModal = ({ deny, onDeny, onClose }:DenyModalProps) => {
                     
                 )}
                 <button className='deny-modal__close' type='button' onClick={onClose}>
-                    <img src='/src/assets/icons/close.svg' aria-label='Close modal' />
+                    <img src={closeIcon} aria-label='Close modal' />
                 </button>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import menuIcon from '@/assets/icons/menu.svg'
 
 type NavLink = {
     id: number
@@ -60,7 +61,7 @@ export const Navigation = ( { isMobile } : NavigationProps) => {
             className='nav__button'
             onClick={toggleMenu}
             aria-label="Меню">
-            <img src='/src/assets/icons/menu.svg'/> 
+            <img src={menuIcon}/> 
           </button>
 
           {isMenuOpen && (

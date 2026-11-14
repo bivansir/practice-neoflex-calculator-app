@@ -1,6 +1,7 @@
 import { BorderStyle, Divider, Orientation } from '@/shared/ui/Divider/Divider';
 import './footer.css'
 import type { NavLink } from "@/shared/Types"
+import neoflexLogoImg from '@/assets/images/neoflex-logo.png'
 
 const navLinks: NavLink[] = [
     { id: 1, label: 'About bank', path: '/placeholder' },
@@ -23,7 +24,7 @@ export const Footer = () => {
             <div className='footer__company-info'>
                 <div className='footer__image-container'>
                     <img className='footer__image'
-                        src='/src/assets/images/neoflex-logo.png' alt='neoflex-logo'/>
+                        src={neoflexLogoImg} alt='neoflex-logo'/>
                 </div>
                 <div className='footer__company-contacts text--style2'>
                     <p className='footer__company-number text text--comfortable'>+7 (495) 984 25 13</p>
