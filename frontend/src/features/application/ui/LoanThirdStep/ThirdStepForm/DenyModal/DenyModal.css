@@ -1,0 +1,47 @@
+.deny-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.deny-modal__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 0;
+    background-color: white;
+}
+
+.deny-modal__title {
+    font-weight: 700;
+    color: #1C1C1E;
+}
+
+.deny-modal__msg {
+    color: #1A202C;
+}
+
+.deny-modal__buttons {
+    display: flex;
+    margin-top: 1rem;
+    gap: 3rem;
+    align-self: flex-end;
+}
+
+.deny-modal__close {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    background: none;
+    padding: 0.25rem;
+}

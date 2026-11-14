@@ -1,0 +1,29 @@
+.accordion__item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E2E8F0;
+
+    cursor: pointer;
+}
+
+.accordion__item details {
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.accordion__item details[open] .accordion__header {
+    margin-bottom: 2rem;
+}
+
+.accordion__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion__content {
+    line-height: 147%;
+    letter-spacing: -2%;
+    font-weight: 400;
+    color: var(--info-section-text-secondary);
+}

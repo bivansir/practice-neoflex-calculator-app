@@ -1,0 +1,10 @@
+.amount-input {
+    font-size: 1rem;
+    font-weight: 500;
+    border: 0; border-bottom: 2px solid var(--line);
+    padding-bottom: 10px;
+}
+
+.amount-input:focus {
+    outline: none;
+}

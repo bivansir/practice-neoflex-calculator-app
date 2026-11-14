@@ -1,0 +1,16 @@
+.text {
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.text--spaced {
+  letter-spacing: 2%;
+}
+
+.text--tight {
+  line-height: 112.00000000000001%;
+}
+
+.text--comfortable {
+  line-height: 147%;
+}

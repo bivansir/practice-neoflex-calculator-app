@@ -1,0 +1,18 @@
+.email-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+.email-banner p {
+    color: #4F5665
+}
+
+@media (max-width: 1000px) {
+  .email-banner h2 {
+    line-height: normal;
+  }
+}

@@ -1,0 +1,27 @@
+:root {
+  --bg-primary: #F5F4FF;
+  --logo: #B4387A;
+
+  --text-primary: #000000;
+  --text-secondary: #434343;
+
+  --nav-link: #1D1929;
+  --nav-link-active: #B2A35F;
+
+  --button-bg: #003CFF;
+  --button-text: #FFFFFF;
+  --button-hover: #7796C0;
+
+  --input-active: #5B35D5;
+  --input-bg: #F9F5E3;
+  --input-border: #80808033;
+  --input-placeholder: #808080;
+  --input-label: #1A202C;
+
+  --line: #80808033;
+  --info-section-text-secondary: #7B7454;
+
+  --error: #FF5631;
+  --attention: #FF0000;
+  --success: 
+}

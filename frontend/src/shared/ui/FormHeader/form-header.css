@@ -1,0 +1,7 @@
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    margin-bottom: 2rem;
+    line-height: normal;
+}

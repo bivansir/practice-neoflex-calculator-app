@@ -1,0 +1,94 @@
+.third-step-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex: 1;
+    padding: 2rem;
+}
+
+.third-step-form__wrapper {
+    background: white;
+    border-radius: 28px;
+}
+
+.third-step-form__schedule {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.third-step-form__schedule th,
+.third-step-form__schedule td {
+    font-weight: 500;
+    font-size: 0.75rem;
+    padding: 0.5rem 3rem;
+    text-align: left;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.third-step-form__schedule th:first-child,
+.third-step-form__schedule td:first-child {
+        padding-left: 0rem;
+}
+
+.third-step-form__schedule th:last-child,
+.third-step-form__schedule td:last-child {
+        padding-right: auto;
+}
+
+.third-step-form__schedule th {
+    color: #4A5568;
+}
+
+.third-step-form__schedule td {
+    color: #1A202C;
+}
+
+.third-step-form__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.third-step-form__send-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+}
+
+.third-step-form .button {
+    padding: 0.75rem 1.75rem;
+}
+
+.third-step-form__schedule-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+@media (max-width: 1030px) {
+    .third-step-form__schedule th,
+    .third-step-form__schedule td {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .third-step-form__footer {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .third-step-form__footer .button {
+        width: fit-content;
+    }
+}
+
+@media (max-width: 700px) {
+    .third-step-form__footer {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .third-step-form__footer .button {
+        align-self: center;
+    }
+}
