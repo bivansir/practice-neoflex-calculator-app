@@ -18,9 +18,9 @@ type FirstStepFormProps = {
 
 const options = [
         { value: 6, label: '6 months' },
-        { value: 12, label: '9 months' },
-        { value: 18, label: '1 year' },
-        { value: 24, label: '1,5 years' }
+        { value: 9, label: '9 months' },
+        { value: 12, label: '1 year' },
+        { value: 18, label: '1,5 years' }
     ];
 
 const amountMin = 15000, amountMax = 600000;

@@ -17,7 +17,7 @@ public class ClientService {
     public Client createClient(LoanStatementRequestDto request) {
         Client client = Client.builder()
                 .lastName(request.getLastName())
-                .firstName(request.getLastName())
+                .firstName(request.getFirstName())
                 .middleName(request.getMiddleName())
                 .birthDate(request.getBirthdate())
                 .email(request.getEmail())
